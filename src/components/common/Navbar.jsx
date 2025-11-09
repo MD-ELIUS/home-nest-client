@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
 import userImg from "../../assets/avatar.png";
 import logoImg from "../../assets/logo.png";
 import { FiMenu } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
+import { AuthContext } from "../../provider/AuthContext";
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-    const [user, setUser] = useState(true);
+    const { user, signOutUser } = use(AuthContext);
 
     useEffect(() => {
         document.querySelector("html").setAttribute("data-theme", theme);
@@ -19,8 +20,18 @@ export default function Navbar() {
     // theme toggle
     const handleTheme = (checked) => {
         setTheme(checked ? "dark" : "light");
-        setUser(false)
+        
     };
+
+     const handleLogOut = () => {
+        signOutUser()
+            .then(() => {
+                setMenuOpen(false)
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+    }
 
     const links = (
         <>
@@ -80,7 +91,7 @@ export default function Navbar() {
                     <img
                         src={user?.photoURL ? user.photoURL : userImg}
                         alt="User Avatar"
-                        className="object-cover w-full h-full rounded-full"
+                        className="object-cover w-full h-full outline-2 outline-secondary rounded-full"
                         onError={(e) => {
                             e.target.onerror = null;
                             e.target.src = userImg;
@@ -90,26 +101,36 @@ export default function Navbar() {
                 </div>
 
                 {/* Dropdown content */}
-                <ul
-                    tabIndex={0}
-                    className="menu menu-sm dropdown-content mt-18 z-[10] p-4 shadow-xl bg-base-100 rounded-xl w-56 border border-bas>e-200"
-                >
-                    <li className="text-center border-b pb-2 mb-2">
-                        <Link to='/profile' className="font-semibold text-xl text-primary">
-                            {user?.displayName || "User"}
-                        </Link>
+          <ul
+  tabIndex={0}
+  className=" dropdown-content mt-20 z-[50] p-4 shadow-xl bg-base-100 rounded-xl w-56 border border-secondary overflow-hidden"
+>
 
-                    </li>
+  <li className="flex flex-col items-center text-center border-b border-secondary pb-2 mb-2">
+    <Link
+      to="/"
+      className="font-semibold text-xl text-secondary truncate w-full text-center"
+    >
+      {user?.displayName || "User"}
+    </Link>
+    <Link
+      to="/"
+      className="font-medium text-[14px] text-secondary break-words w-full text-center"
+    >
+      {user?.email || "user@example.com"}
+    </Link>
+  </li>
 
-                    <li>
-                        <button
-                          
-                            className="btn btn-primary  w-full"
-                        >
-                            Logout
-                        </button>
-                    </li>
-                </ul>
+  <li className="mt-2">
+    <button
+      onClick={handleLogOut}
+      className="btn btn-primary btn-outline w-full"
+    >
+      Sign Out
+    </button>
+  </li>
+</ul>
+
             </div>
                             </>
                         ) : (
@@ -149,23 +170,31 @@ export default function Navbar() {
                             <>
                             <div className="flex flex-col justify-center items-center">
 
-                                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14">
+                                  <div className="btn btn-ghost btn-circle avatar h-14 w-14">
                                     <img
                                         src={user?.photoURL || userImg}
                                         alt="User Avatar"
-                                        className="rounded-full object-cover"
+                                        className="rounded-full outline-2 outline-secondary object-cover"
                                         onError={(e) => { e.target.onerror = null; e.target.src = userImg; }}
                                     />
                                 </div>
 
+                                <div  className="font-semibold text-xl text-secondary w-full text-center">
+                                    {user.displayName}
+                                </div>
+
+                                <div className="font-medium text-[14px] text-secondary  w-full text-center">
+                                    {user.email}
+                                </div>
+
                             </div>
-                             <button className="btn btn-primary w-full font-semibold md:px-4 xl:px-6">Sign Out</button>
+                             <button onClick={handleLogOut} className="btn btn-primary btn-outline w-full font-semibold md:px-4 xl:px-6">Sign Out</button>
                             </>
                            
                         ) : (
                             <>
-                                <Link to="/login" className="btn btn-primary w-full font-semibold md:px-4 xl:px-6">Login</Link>
-                                <Link to="/register" className="btn btn-primary w-full font-semibold md:px-4 xl:px-6">Register</Link>
+                                <Link to="/login" onClick={() => setMenuOpen(!menuOpen)} className="btn btn-primary btn-outline w-full font-semibold md:px-4 xl:px-6">Login</Link>
+                                <Link to="/register" onClick={() => setMenuOpen(!menuOpen)} className="btn btn-primary btn-outline w-full font-semibold md:px-4 xl:px-6">Register</Link>
                             </>
                         )}
                     </div>

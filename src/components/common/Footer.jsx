@@ -4,7 +4,7 @@ import logoImg from "../../assets/logo.png";
 
 export default function Footer() {
   return (
-    <footer className="bg-base-200 text-base-content border-t border-base-300 mt-10">
+    <footer className="bg-base-200 text-base-content border-t border-base-300 mt-4 sm:mt-6 md:mt-8 lg:mt-10">
           <div className="w-11/12 mx-auto py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
         {/* Logo + Name */}
