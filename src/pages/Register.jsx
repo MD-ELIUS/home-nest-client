@@ -82,7 +82,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-base-100 p-4 animate-fade-in-center mt-4 sm:mt-6 md:mt-8 lg:mt-10">
+    <div className="flex justify-center items-center min-h-screen bg-base-100  animate-fade-in-center mt-4 sm:mt-6 md:mt-8 lg:mt-10">
       <div className=" w-full max-w-md bg-base-200 shadow-md p-6 rounded-lg">
         <h2 className="text-2xl font-bold text-center mb-6 border-b border-base-300 pb-4">
           Create Your Account
