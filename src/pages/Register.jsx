@@ -5,6 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { updateProfile } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router';
+import { auth } from '../firebase/firebase.init';
 
 const Register = () => {
   const [error, setError] = useState('');
@@ -17,9 +18,29 @@ const Register = () => {
     setGoogleError('');
     signInGoogleUser()
       .then(result => {
-        setUser(result.user);
+        const user = result.user ;
+        setUser(user);
         toast.success('Logged in successfully');
         navigate('/');
+         const newUser = {
+                    name: user.displayName,
+                    email: user.email,
+                    photoUrl: user.photoURL,
+                    createdAt: new Date().toISOString() // adds current date/time
+                }
+
+                     // create user in the database
+                fetch('http://localhost:5205/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(newUser)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log('data after user save', data)
+                })
       })
       .catch(err => setGoogleError(err.message));
   };
@@ -33,7 +54,7 @@ const Register = () => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
-    const photoUrl = e.target.photoUrl.value;
+    const photoURL = e.target.photoURL.value;
     const password = e.target.password.value;
     const terms = e.target.terms.checked;
 
@@ -63,14 +84,37 @@ const Register = () => {
     createUser(email, password)
       .then(result => {
         const user = result.user;
-        setUser(user);
-        updateProfile(user, { displayName: name, photoURL: photoUrl })
+         setUser({...auth.currentUser,
+                    displayName: name,
+                    photoURL,
+                });
+        updateProfile(user, { displayName: name, photoURL: photoURL })
           .then(() => {})
           .catch(err => setError(err.message));
 
         e.target.reset();
         toast.success('Registered successfully');
         navigate('/');
+
+             const newUser = {
+                    name: name,
+                    email: user.email,
+                    photoUrl: photoURL,
+                    createdAt: new Date().toISOString() // adds current date/time
+                }
+
+                     // create user in the database
+                fetch('http://localhost:5205/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(newUser)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log('data after user save', data)
+                })
       })
       .catch(err => {
         if (err.message.includes('auth/email-already-in-use')) {
@@ -83,7 +127,7 @@ const Register = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-100  animate-fade-in-center mt-4 sm:mt-6 md:mt-8 lg:mt-10">
-      <div className=" w-full max-w-md bg-base-200 shadow-md p-6 rounded-lg">
+      <div className=" w-11/12 mx-auto max-w-md bg-base-200 shadow-xl border border-base-300 p-6 rounded-lg">
         <h2 className="text-2xl font-bold text-center mb-6 border-b border-base-300 pb-4">
           Create Your Account
         </h2>
@@ -103,7 +147,7 @@ const Register = () => {
           <div>
             <label className="label font-semibold">Photo URL</label>
             <input
-              name="photoUrl"
+              name="photoURL"
               type="text"
               placeholder="Enter your photo URL"
               className="input w-full bg-base-200 h-12 focus:outline-none focus:ring-0"

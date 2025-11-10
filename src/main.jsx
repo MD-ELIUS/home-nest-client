@@ -9,6 +9,7 @@ import Home from './pages/Home.jsx';
 import AuthProvider from './provider/AuthProvider.jsx';
 import Register from './pages/Register.jsx';
 import Login from './pages/Login.jsx';
+import AddProperty from './pages/AddProperty.jsx';
 
 
 const router = createBrowserRouter([
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
        {
         path: '/login',
         Component: Login
+      },
+      {
+        path: '/add-property',
+        element: <AddProperty></AddProperty>
       }
       
     ]

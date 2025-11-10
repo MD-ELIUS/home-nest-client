@@ -1,4 +1,3 @@
-// Banner.jsx
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay, EffectFade } from "swiper/modules";
@@ -37,7 +36,7 @@ const slides = [
 const Banner = () => {
   const [isDark, setIsDark] = useState(false);
 
-  // Detect dark/light theme
+  // Detect theme
   useEffect(() => {
     const observer = new MutationObserver(() => {
       setIsDark(document.documentElement.getAttribute("data-theme") === "dark");
@@ -47,53 +46,84 @@ const Banner = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Retrigger animations on every slide change
-  const handleSlideChange = () => {
-    const activeSlide = document.querySelector(".swiper-slide-active");
-    if (!activeSlide) return;
+  // ✅ Zoom + text animation trigger
+ const handleSlideChange = (swiper) => {
+  const activeSlide = swiper
+    ? swiper.slides[swiper.activeIndex]
+    : document.querySelector(".swiper-slide-active");
+  if (!activeSlide) return;
 
-    const leftDiv = activeSlide.querySelector(".animate-left-to-center");
-    const rightDiv = activeSlide.querySelector(".animate-right-to-center");
-    const centerDot = activeSlide.querySelector(".animate-fade-in-center");
-    const subtitle = activeSlide.querySelector("h2.animate__fadeInDown");
-    const title = activeSlide.querySelector("h1.animate__fadeInUp");
-    const desc = activeSlide.querySelector("p.animate__fadeInUp");
+  // ✅ remove zoom-animate from all slides first
+  swiper?.slides.forEach((slide) => {
+    const bg = slide.querySelector(".zoom-bg");
+    if (bg) {
+      bg.classList.remove("zoom-animate");
+    }
+  });
 
-    const retrigger = (el, classes) => {
-      if (!el) return;
-      el.classList.remove(...classes);
-      void el.offsetWidth; // force reflow
-      el.classList.add(...classes);
-    };
+  // ✅ add zoom-animate to active slide
+  const bgDiv = activeSlide.querySelector(".zoom-bg");
+  if (bgDiv) {
+    void bgDiv.offsetWidth; // reset reflow
+    bgDiv.classList.add("zoom-animate");
+  }
 
-    retrigger(leftDiv, ["animate-left-to-center"]);
-    retrigger(rightDiv, ["animate-right-to-center"]);
-    retrigger(centerDot, ["animate-fade-in-center"]);
-    retrigger(subtitle, ["animate__animated", "animate__fadeInDown"]);
-    retrigger(title, ["animate__animated", "animate__fadeInUp"]);
-    retrigger(desc, ["animate__animated", "animate__fadeInUp"]);
+  // retrigger text animations
+  const retrigger = (selector, classes) => {
+    const el = activeSlide.querySelector(selector);
+    if (!el) return;
+    el.classList.remove(...classes);
+    void el.offsetWidth;
+    el.classList.add(...classes);
   };
 
+  retrigger("h2.animate__fadeInDown", ["animate__animated", "animate__fadeInDown"]);
+  retrigger("h1.animate__fadeInUp", ["animate__animated", "animate__fadeInUp"]);
+  retrigger("p.animate__fadeInUp", ["animate__animated", "animate__fadeInUp"]);
+};
+
+
   return (
-    <section className="w-full h-[35vh] sm:h-[50vh] md:h-[65vh] lg:h-[75vh] relative">
-      <Swiper
-        modules={[Pagination, Autoplay, EffectFade]}
-        pagination={{ clickable: true }}
-        effect="fade"
-        autoplay={{
-          delay: 9500,
-          disableOnInteraction: false,
-        }}
-        loop
-        className="h-full w-full relative"
-        onSlideChangeTransitionStart={handleSlideChange} // works for manual & autoplay
-      >
+    <section className="w-full h-[35vh] sm:h-[50vh] md:h-[65vh] lg:h-[75vh] relative overflow-hidden">
+ <Swiper
+  modules={[Pagination, Autoplay, EffectFade]}
+  pagination={{ clickable: true }}
+  effect="fade"
+  autoplay={{
+    delay: 6500,
+    disableOnInteraction: false,
+  }}
+  loop
+  onInit={(swiper) => {
+    // ✅ first slide zoom after DOM ready
+    setTimeout(() => handleSlideChange(swiper), 50);
+  }}
+  onSlideChangeTransitionStart={(swiper) => {
+    handleSlideChange(swiper);
+
+    // ✅ if loop restarted (swiper.activeIndex === 0 after last slide)
+    if (swiper.realIndex === 0) {
+      const firstSlide = swiper.slides[swiper.activeIndex];
+      const bgDiv = firstSlide.querySelector(".zoom-bg");
+      if (bgDiv) {
+        bgDiv.classList.remove("zoom-animate");
+        void bgDiv.offsetWidth;
+        bgDiv.classList.add("zoom-animate");
+      }
+    }
+  }}
+  className="h-full w-full"
+>
+
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <div
-              className="relative flex items-center justify-center h-full bg-cover bg-center transition-all duration-1000"
-              style={{ backgroundImage: `url(${slide.image})` }}
-            >
+            <div className="relative flex items-center justify-center h-full overflow-hidden">
+              {/* ✅ Background image with zoom class */}
+              <div
+                className="absolute inset-0 bg-cover bg-center zoom-bg"
+                style={{ backgroundImage: `url(${slide.image})` }}
+              ></div>
+
               {/* Theme overlay */}
               <div
                 className={`absolute inset-0 transition-colors duration-1000 ${
@@ -107,15 +137,10 @@ const Banner = () => {
                   {slide.subtitle}
                 </h2>
 
-                <div className="flex justify-center items-center gap-3 mb-2 sm:mb-3 relative">
-                  {/* Left div sliding from left */}
-                  <div className="py-[1px] md:py-[2px] rounded-2xl bg-white w-[80px] md:w-[100px] xl:w-[120px] animate-left-to-center"></div>
-
-                  {/* Center dot (fade in) */}
+                <div className="flex justify-center items-center gap-3 mb-2 sm:mb-3">
+                  <div className="py-[1px] md:py-[2px] bg-white w-[80px] md:w-[100px] xl:w-[120px] rounded-2xl animate-left-to-center"></div>
                   <div className="w-2 h-2 md:w-3 md:h-3 bg-white rounded-full animate-fade-in-center"></div>
-
-                  {/* Right div sliding from right */}
-                  <div className="py-[1px] md:py-[2px] rounded-2xl bg-white w-[80px] md:w-[100px] xl:w-[120px] animate-right-to-center"></div>
+                  <div className="py-[1px] md:py-[2px] bg-white w-[80px] md:w-[100px] xl:w-[120px] rounded-2xl animate-right-to-center"></div>
                 </div>
 
                 <h1 className="text-lg sm:text-3xl md:text-4xl font-bold leading-tight mb-2 sm:mb-4 animate__animated animate__fadeInUp">
@@ -129,9 +154,19 @@ const Banner = () => {
           </SwiperSlide>
         ))}
 
-        {/* Pagination dots inside bottom of image */}
         <div className="swiper-pagination absolute bottom-2 left-1/2 -translate-x-1/2 z-20"></div>
       </Swiper>
+
+      {/* ✅ Zoom effect CSS */}
+      <style jsx>{`
+        .zoom-bg {
+          transform: scale(1);
+          transition: transform 9.5s ease-out;
+        }
+        .zoom-animate {
+          transform: scale(1.12);
+        }
+      `}</style>
     </section>
   );
 };

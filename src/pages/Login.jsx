@@ -27,6 +27,28 @@ const Login = () => {
         setUser(user);
         toast.success("Logged in successfully");
         navigate(`${location.state ? location.state : "/"}`);
+
+          const newUser = {
+                    name: user.displayName,
+                    email: user.email,
+                    photoUrl: user.photoURL,
+                    createdAt: new Date().toISOString() // adds current date/time
+                }
+
+                     // create user in the database
+                fetch('http://localhost:5205/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(newUser)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log('data after user save', data)
+                })
+
+        
       })
       .catch((err) => setGoogleError(err.message));
   };
@@ -52,7 +74,7 @@ const Login = () => {
   return (
    <div className="flex justify-center items-center  bg-base-100  animate-fade-in-center mt-4 sm:mt-6 md:mt-8 lg:mt-10">
 
-      <div className="w-full max-w-md bg-base-200 shadow-md p-6 rounded-lg">
+      <div className=" w-11/12 mx-auto max-w-md bg-base-200 shadow-xl p-6 border border-base-300 rounded-lg">
         <h2 className="text-2xl font-bold text-center mb-6 border-b border-base-300 pb-4">
           Login to Your Account
         </h2>

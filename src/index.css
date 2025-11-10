@@ -11,7 +11,7 @@
   --color-accent: #FFC700;        /* Highlight color */
   --color-neutral: #F3F3F3;       /* For background/base */
   --color-base-100: #FFFFFF;      /* Card/background light */
-  --color-base-200: #F7F7F7;      /* Slightly darker base */
+  --color-base-200: #FFFFFF;      /* Slightly darker base */
   --color-base-300: #E7E7E7;      /* For elements */
   --color-info: #3ABFF8;          /* Info messages */
   --color-success: #36D399;       /* Success messages */

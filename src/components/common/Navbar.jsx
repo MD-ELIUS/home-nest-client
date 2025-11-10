@@ -6,12 +6,15 @@ import logoImg from "../../assets/logo.png";
 import { FiMenu } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import { AuthContext } from "../../provider/AuthContext";
+import Switch from "../Switch";
+
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
     const { user, signOutUser } = use(AuthContext);
 
+    console.log(user)
     useEffect(() => {
         document.querySelector("html").setAttribute("data-theme", theme);
         localStorage.setItem("theme", theme);
@@ -40,6 +43,7 @@ export default function Navbar() {
             <li><NavLink to="/add-property" className=" text-secondary font-medium">Add Property</NavLink></li>
             <li><NavLink to="/my-properties" className=" text-secondary font-medium">My Properties</NavLink></li>
             <li><NavLink to="/my-ratings" className=" text-secondary font-medium">My Ratings</NavLink></li>
+            
         </>
     );
 
@@ -142,17 +146,12 @@ export default function Navbar() {
                     </div>
 
                     {/* Theme Toggle */}
-                    <label className="flex items-center cursor-pointer gap-2">
-                        <span className="text-base-content sm:inline text-sm md:text-base">
-                            {theme === "light" ? "Dark" : "Light"}
-                        </span>
-                        <input
-                            type="checkbox"
-                            className="toggle toggle-success"
-                            onChange={(e) => handleTheme(e.target.checked)}
-                            defaultChecked={theme === "dark"}
-                        />
-                    </label>
+            <div className="flex items-center gap-2">
+
+  <Switch checked={theme === "dark"} onChange={handleTheme} />
+</div>
+
+
 
                 </div>
             </div>
