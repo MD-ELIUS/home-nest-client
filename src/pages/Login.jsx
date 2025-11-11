@@ -74,7 +74,7 @@ const Login = () => {
   return (
    <div className="flex justify-center items-center  bg-base-100  animate-fade-in-center mt-4 sm:mt-6 md:mt-8 lg:mt-10">
 
-      <div className=" w-11/12 mx-auto max-w-md bg-base-200 shadow-xl p-6 border border-base-300 rounded-lg">
+      <div className=" w-11/12 mx-auto max-w-md bg-base-200 shadow-xl p-6 border border-base-300 rounded-2xl">
         <h2 className="text-2xl font-bold text-center mb-6 border-b border-base-300 pb-4">
           Login to Your Account
         </h2>

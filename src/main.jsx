@@ -10,6 +10,7 @@ import AuthProvider from './provider/AuthProvider.jsx';
 import Register from './pages/Register.jsx';
 import Login from './pages/Login.jsx';
 import AddProperty from './pages/AddProperty.jsx';
+import AllProperties from './pages/AllProperties.jsx';
 
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: '/add-property',
         element: <AddProperty></AddProperty>
+      },
+      {
+        path: '/all-properties',
+        Component: AllProperties
       }
       
     ]

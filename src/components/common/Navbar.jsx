@@ -71,15 +71,7 @@ export default function Navbar() {
                     <ul className="menu menu-horizontal px-1 activeClass  space-x-2 md:text-[12px] xl:text-base font-medium">{links}</ul>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <div className="xl:hidden">
-                    <button
-                        onClick={() => setMenuOpen(!menuOpen)}
-                        className="btn btn-ghost text-base-content p-1 text-2xl sm:text-3xl"
-                    >
-                        {menuOpen ? <MdClose size={24} /> : <FiMenu size={24} />}
-                    </button>
-                </div>
+               
 
                 {/* Right Section */}
                 <div className="flex items-center gap-2">
@@ -151,8 +143,16 @@ export default function Navbar() {
   <Switch checked={theme === "dark"} onChange={handleTheme} />
 </div>
 
+                </div>
 
-
+                 {/* Mobile Menu Button */}
+                <div className="xl:hidden">
+                    <button
+                        onClick={() => setMenuOpen(!menuOpen)}
+                        className="btn btn-ghost text-base-content p-1 text-2xl sm:text-3xl"
+                    >
+                        {menuOpen ? <MdClose size={24} /> : <FiMenu size={24} />}
+                    </button>
                 </div>
             </div>
 
