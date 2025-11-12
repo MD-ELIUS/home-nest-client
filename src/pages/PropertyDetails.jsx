@@ -291,7 +291,8 @@ const handleReviewDelete = async (id) => {
       </div>
       <textarea
         name="reviewText"
-        placeholder="Write a short review..."
+        placeholder="Write a short review...max(200 character)"
+        maxLength={200}
         className="textarea outline-none w-full h-24 resize-none"
       ></textarea>
       <button type="submit" className="btn btn-primary btn-outline w-full sm:w-auto">

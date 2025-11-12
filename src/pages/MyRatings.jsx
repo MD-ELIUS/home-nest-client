@@ -45,17 +45,18 @@ const MyRatings = () => {
   if (loading || loadingProperties) return <LoadingData />;
 
   return (
-    <div className="w-11/12 mx-auto py-8">
-      <h2 className="text-2xl sm:text-3xl font-bold text-primary text-center mb-8">
-        My Ratings & Reviews
-      </h2>
+    <div className=" mx-auto py-8 bg-base-100">
+      <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold mb-7 text-secondary">
+            My <span className="text-primary">Ratings</span>{" "}
+            <span className="text-primary">({reviews.length})</span>
+          </h2>
 
       {reviews.length === 0 ? (
-        <div className="text-center text-secondary/70 text-lg py-16 bg-base-200 rounded-xl shadow-md animate-fade-in-center">
+        <div className="text-center text-secondary/70 text-lg py-16   animate-fade-in-center">
           <p>You haven't submitted any reviews yet.</p>
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="w-11/12 mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {reviews.map((rev, idx) => {
             const property = getPropertyInfo(rev.propertyId);
 
@@ -64,7 +65,7 @@ const MyRatings = () => {
             return (
               <div
                 key={idx}
-                className="bg-base-100 border border-base-300 shadow-md rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300 animate-left-to-center"
+                className="bg-base-200 border border-base-300 shadow-md rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300 animate-left-to-center"
               >
                 {/* Property Thumbnail */}
                 <div className="h-48 w-full overflow-hidden">

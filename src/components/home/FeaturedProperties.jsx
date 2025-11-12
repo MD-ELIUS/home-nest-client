@@ -22,10 +22,10 @@ const FeaturedProperties = () => {
  
 
   return (
-    <section className="bg-base-200 py-6 md:py-8 lg:py-10 ">
+    <section className="bg-base-100 py-6 md:py-8 lg:py-10 ">
       <div className="w-11/12 max-w-7xl mx-auto animate-fade-in-center">
         {/* Responsive Heading */}
-        <h2 className="text-center text-2xl  md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary leading-tight">
+        <h2 className="text-center text-3xl  md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary leading-tight">
           Featured <span className="text-primary">Real Estate</span>
         </h2>
 
