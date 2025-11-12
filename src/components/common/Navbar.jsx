@@ -40,9 +40,19 @@ export default function Navbar() {
         <>
             <li><NavLink to="/" className=" text-secondary font-medium">Home</NavLink></li>
             <li><NavLink to="/all-properties" className=" text-secondary font-medium">All Properties</NavLink></li>
-            <li><NavLink to="/add-property" className=" text-secondary font-medium">Add Property</NavLink></li>
+
+            {
+                user && (
+                    <>
+                     <li><NavLink to="/add-property" className=" text-secondary font-medium">Add Property</NavLink></li>
             <li><NavLink to="/my-properties" className=" text-secondary font-medium">My Properties</NavLink></li>
             <li><NavLink to="/my-ratings" className=" text-secondary font-medium">My Ratings</NavLink></li>
+                    
+                    </>
+                )
+            }
+
+           
             
         </>
     );
@@ -52,7 +62,7 @@ export default function Navbar() {
             <div className=" w-11/12 mx-auto flex justify-between items-center py-2 sm:py-3 md:py-4">
 
                 {/* Left Section - Logo */}
-                <Link to="/" className="flex items-center gap-2 text-xl font-bold">
+                <Link onClick={() => setMenuOpen(!menuOpen)} to="/" className="flex items-center gap-2 text-xl font-bold">
                     <div>
                         <img
                             className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 xl:h-16 xl:w-16 2xl:h-20 2xl:w-20"
@@ -161,9 +171,18 @@ export default function Navbar() {
                 <div className="xl:hidden   nav ">
                     <ul className="menu  activeClass  space-y-2"> <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/" className="text-secondary text-[16px] font-medium">Home</NavLink></li>
                         <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/all-properties" className="text-secondary text-[16px] font-medium">All Properties</NavLink></li>
-                        <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/add-property" className="text-secondary text-[16px] font-medium">Add Property</NavLink></li>
+
+                         {
+                            user && (
+                                <>
+                                 <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/add-property" className="text-secondary text-[16px] font-medium">Add Property</NavLink></li>
                         <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/my-properties" className="text-secondary text-[16px] font-medium">My Properties</NavLink></li>
-                        <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/my-ratings" className="text-secondary text-[16px] font-medium">My Ratings</NavLink></li></ul>
+                        <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/my-ratings" className="text-secondary text-[16px] font-medium">My Ratings</NavLink></li>
+                                </>
+                            )
+                         }
+
+                       </ul>
                     <div className="px-3 pb-4 flex flex-col gap-2">
                         {user ? (
                             <>

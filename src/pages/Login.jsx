@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useLocation } from "react-router";
+import usePageTitle from "../hooks/usePageTitle";
 
 const Login = () => {
   const [error, setError] = useState("");
@@ -13,6 +14,8 @@ const Login = () => {
   const emailRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
+
+     usePageTitle("Login | HomeNest Real Estate");
 
   const handlePasswordShow = (e) => {
     e.preventDefault();
@@ -72,12 +75,19 @@ const Login = () => {
 
 
   return (
-   <div className="flex justify-center items-center  bg-base-100  animate-fade-in-center mt-4 sm:mt-6 md:mt-8 lg:mt-10">
 
-      <div className=" w-11/12 mx-auto max-w-md bg-base-200 shadow-xl p-6 border border-base-300 rounded-2xl">
-        <h2 className="text-2xl font-bold text-center mb-6 border-b border-base-300 pb-4">
-          Login to Your Account
+   
+      
+      
+   <div className="flex justify-center items-center  bg-base-200   py-4 sm:py-6 md:py-8 lg:py-10">
+
+      <div className=" w-11/12 mx-auto max-w-md bg-base-200 shadow-xl p-6 border border-base-300 rounded-2xl animate-fade-in-center">
+      <h2 className="text-center text-2xl  md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary">
+           Login to <span className="text-primary">Your Account</span>
         </h2>
+        {/* <h2 className="text-2xl font-bold text-center mb-6 border-b border-base-300 pb-4">
+          Login to Your Account
+        </h2> */}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
@@ -153,6 +163,11 @@ const Login = () => {
         </p>
       </div>
     </div>
+
+
+    
+
+
   );
 };
 

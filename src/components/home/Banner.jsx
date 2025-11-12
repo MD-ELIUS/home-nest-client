@@ -84,7 +84,7 @@ const Banner = () => {
 
 
   return (
-    <section className="w-full h-[35vh] sm:h-[50vh] md:h-[65vh] lg:h-[75vh] relative overflow-hidden">
+    <section className="w-full h-[50vh] md:h-[65vh] lg:h-[75vh] relative overflow-hidden">
  <Swiper
   modules={[Pagination, Autoplay, EffectFade]}
   pagination={{ clickable: true }}
@@ -132,7 +132,7 @@ const Banner = () => {
               ></div>
 
               {/* Slide text */}
-              <div className="relative text-center text-white px-3 sm:px-4 max-w-4xl mx-auto">
+              <div className="relative text-center text-white px-3 sm:px-4 ">
                 <h2 className="text-xs sm:text-base md:text-lg lg:text-2xl font-light mb-2 sm:mb-3 animate__animated animate__fadeInDown">
                   {slide.subtitle}
                 </h2>
@@ -143,7 +143,7 @@ const Banner = () => {
                   <div className="py-[1px] md:py-[2px] bg-white w-[80px] md:w-[100px] xl:w-[120px] rounded-2xl animate-right-to-center"></div>
                 </div>
 
-                <h1 className="text-lg sm:text-3xl md:text-4xl font-bold leading-tight mb-2 sm:mb-4 animate__animated animate__fadeInUp">
+                <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold leading-tight mb-2 sm:mb-4 animate__animated animate__fadeInUp">
                   {slide.title}
                 </h1>
                 <p className="text-[11px] sm:text-base md:text-lg max-w-2xl mx-auto animate__animated animate__fadeInUp">

@@ -9,11 +9,11 @@ const LoadingHome = () => {
       <div className="w-16 h-16 border-4 border-dashed rounded-full border-primary border-t-transparent animate-spin mb-6"></div>
 
       {/* Loading text */}
-      <p className="text-lg font-semibold text-secondary mb-2">
+      <p className="text-lg font-semibold text-secondary ">
         Preparing your page...
       </p>
-      <p className="text-base text-base-300">
-        Loading your data. Thank you for your patience.
+      <p className="text-base text-base-300 mb-2">
+        Thank you for your patience.
       </p>
       <Link to="/" className="flex items-center gap-2 text-xl font-bold">
                     <div>

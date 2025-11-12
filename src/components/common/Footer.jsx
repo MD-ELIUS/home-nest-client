@@ -1,10 +1,14 @@
 import { Link } from "react-router";
 import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import logoImg from "../../assets/logo.png";
+import { use } from "react";
+import { AuthContext } from "../../provider/AuthContext";
 
 export default function Footer() {
+
+  const {user} = use(AuthContext)
   return (
-    <footer className="bg-base-200 text-base-content border-t border-base-300 mt-4 sm:mt-6 md:mt-8 lg:mt-10">
+    <footer className="bg-base-200 text-base-content border-t border-base-300 ">
           <div className="w-11/12 mx-auto py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
         {/* Logo + Name */}
@@ -33,7 +37,7 @@ export default function Footer() {
         <div className="sm:justify-self-end ">
           <h3 className="text-lg font-semibold mb-3 text-primary">Contact Us</h3>
           <ul className="space-y-2 text-sm md:text-base text-secondary">
-            <li>Email: <a href="mailto:info@homenest.com" className="hover:text-primary">info@homenest.com</a></li>
+            <li>Email: <a href="https://mail.google.com" target="_blank" className="hover:text-primary">info@homenest.com</a></li>
             <li>Phone: <a href="tel:+880123456789" className="hover:text-primary">+880 1234 567 890</a></li>
             <li>Address: Barishal, Bangladesh</li>
           </ul>
@@ -43,10 +47,12 @@ export default function Footer() {
         <div className="lg:justify-self-end ">
           <h3 className="text-lg font-semibold mb-3 text-primary">Useful Links</h3>
           <ul className="space-y-2 text-sm md:text-base text-secondary">
-            <li><Link to="/" className="hover:text-primary">Home</Link></li>
-            <li><Link to="/all-properties" className="hover:text-primary">All Properties</Link></li>
-            <li><Link to="/add-property" className="hover:text-primary">Add Property</Link></li>
-            <li><Link to="/terms" className="hover:text-primary">Terms & Conditions</Link></li>
+            <li><Link to="/"  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}  className="hover:text-primary">Home</Link></li>
+            <li><Link to="/all-properties"  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}  className="hover:text-primary">All Properties</Link></li>
+          { user &&
+              <li><Link to="/add-property"  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}  className="hover:text-primary">Add Property</Link></li>
+          }
+            <li><Link to="/terms"  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}  className="hover:text-primary">Terms & Conditions</Link></li>
           </ul>
         </div>
 

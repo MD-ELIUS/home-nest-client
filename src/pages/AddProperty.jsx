@@ -3,12 +3,16 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { AuthContext } from "../provider/AuthContext";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import usePageTitle from "../hooks/usePageTitle";
+
 
 const MySwal = withReactContent(Swal);
 
 const AddProperty = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure() ;
+
+  usePageTitle("Add Property | HomeNest Real Estate");
 
  
 
@@ -23,6 +27,7 @@ const AddProperty = () => {
     const imageUrl = e.target.imageUrl.value ;
     const userEmail = e.target.email.value ;
     const userName = e.target.name.value ;
+    const userImage = user.photoURL
 
 const newProperty = {
     propertyName, 
@@ -33,6 +38,7 @@ const newProperty = {
     imageUrl,
     userEmail,
     userName,
+    userImage,
     created_at: new Date().toISOString()
 }
 
@@ -55,10 +61,13 @@ const newProperty = {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-base-100 animate-fade-in-center mt-4 sm:mt-6 md:mt-8 lg:mt-10">
-      <div className="w-11/12 mx-auto max-w-3xl bg-base-200  shadow-xl p-6 border border-base-300 rounded-2xl">
-        <h2 className="text-2xl font-bold text-center mb-6 border-b border-base-300 pb-4">
-          Add New Property
+
+      
+
+       <div className="flex justify-center items-center min-h-screen bg-base-200 py-4 sm:py-6 md:py-8 lg:py-10">
+      <div className="w-11/12 mx-auto max-w-3xl bg-base-200  shadow-xl p-6 border border-base-300 rounded-2xl animate-fade-in-center ">
+          <h2 className="text-center text-2xl  md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary">
+          Add <span className="text-primary">Property</span>
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -179,6 +188,10 @@ const newProperty = {
         </form>
       </div>
     </div>
+    
+
+
+   
   );
 };
 

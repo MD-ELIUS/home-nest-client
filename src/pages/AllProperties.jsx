@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropertyCard from "../components/common/PropertyCard";
 import LoadingHome from "../Loader/LoadingHome";
 import LoadingData from "../Loader/LoadingData";
+import usePageTitle from "../hooks/usePageTitle";
 
 const AllProperties = () => {
   const [properties, setProperties] = useState([]);
@@ -10,6 +11,9 @@ const AllProperties = () => {
   const [sortOption, setSortOption] = useState("dateDesc");
   const [searchTerm, setSearchTerm] = useState("");
   const [isSorting, setIsSorting] = useState(true);
+
+  usePageTitle("All Properties | HomeNest Real Estate");
+
 
   const handleSearchTerm = (e) => {
     const value = e.target.value;
@@ -43,10 +47,12 @@ const AllProperties = () => {
 
   // 🟢 Show loader if sorting/fetching
   return (
-    <section className="bg-base-200 min-h-screen py-14">
+
+
+       <section className="bg-base-200 min-h-screen py-4 sm:py-6 md:py-8 lg:py-10">
       <div className="w-11/12 mx-auto">
-        <h2 className="text-center text-4xl font-bold mb-10 text-secondary">
-          All <span className="text-primary">Properties</span>
+        <h2 className="text-center text-2xl  md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary">
+          All <span className="text-primary">Properties ({properties.length})</span>
         </h2>
 
         {/* ---- Filter Controls ---- */}
@@ -100,6 +106,9 @@ const AllProperties = () => {
         )}
       </div>
     </section>
+  
+
+   
   );
 };
 

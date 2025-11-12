@@ -11,6 +11,9 @@ import Register from './pages/Register.jsx';
 import Login from './pages/Login.jsx';
 import AddProperty from './pages/AddProperty.jsx';
 import AllProperties from './pages/AllProperties.jsx';
+import PropertyDetails from './pages/PropertyDetails.jsx';
+import PrivateRoute from './routes/PrivateRoute.jsx';
+import MyProperties from './pages/MyProperties.jsx';
 
 
 const router = createBrowserRouter([
@@ -32,11 +35,19 @@ const router = createBrowserRouter([
       },
       {
         path: '/add-property',
-        element: <AddProperty></AddProperty>
+        element: <PrivateRoute><AddProperty></AddProperty></PrivateRoute>
       },
       {
         path: '/all-properties',
         Component: AllProperties
+      },
+      {
+        path: '/property-details/:id',
+        element: <PrivateRoute><PropertyDetails></PropertyDetails></PrivateRoute>
+      },
+      {
+        path: "/my-properties",
+        element: <PrivateRoute><MyProperties></MyProperties></PrivateRoute>
       }
       
     ]

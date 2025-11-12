@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../provider/AuthContext";
+import { MapPin } from "lucide-react";
 
 const PropertyCard = ({ property }) => {
   const { user } = use(AuthContext);
@@ -17,12 +18,12 @@ const PropertyCard = ({ property }) => {
 
   return (
     <div
-      className="card bg-base-100 border border-base-300 rounded-2xl shadow-md hover:shadow-xl 
-      transition-all duration-300 hover:-translate-y-1 animate-left-to-center 
-      w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto"
+      className="card bg-base-100 dark:bg-base-200 border border-base-300 rounded-2xl shadow-md 
+        hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-left-to-center
+        w-full md:max-w-md lg:max-w-lg mx-auto"
     >
       {/* Image */}
-      <figure className="relative h-32 sm:h-44 md:h-52 lg:h-56 overflow-hidden rounded-t-2xl">
+      <figure className="relative h-52 sm:h-64 lg:h-56 overflow-hidden rounded-t-2xl">
         <img
           src={imageUrl || "/placeholder.jpg"}
           alt={propertyName}
@@ -37,29 +38,32 @@ const PropertyCard = ({ property }) => {
       </figure>
 
       {/* Card Body */}
-      <div className="card-body p-3 sm:p-4 md:p-5">
-        <h3 className="text-sm sm:text-base md:text-lg font-semibold text-secondary mb-1">
+      <div className="card-body p-3 sm:p-4 md:p-5 space-y-2">
+        <h3 className="text-sm sm:text-base md:text-lg font-semibold text-secondary truncate">
           {propertyName || "Untitled Property"}
         </h3>
 
-        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-1">
+        <p className="text-sm sm:text-base text-gray-500 font-medium dark:text-neutral">
           Category: <span className="font-medium text-primary">{category}</span>
         </p>
 
-        <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm line-clamp-2 mb-2">
+        <p className="text-sm sm:text-base font-medium text-gray-500 dark:text-neutral  line-clamp-3">
           {description || "No description available."}
         </p>
 
-        <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">
-          <span className="flex items-center gap-1 truncate max-w-[65%]">
-            <i className="fa-solid fa-location-dot text-primary"></i> {location}
+        <div className="flex items-center font-medium justify-between text-sm sm:text-base text-gray-500 dark:text-gray-400 gap-1">
+          <span className="flex items-center gap-1 truncate sm:max-w-[60%]">
+            <MapPin size={16} /> {location}
           </span>
           <span className="font-semibold text-primary">${price}</span>
         </div>
 
         <Link
-          to={user ? `/property/${_id}` : "/login"}
-          className="btn btn-outline btn-primary w-full font-medium hover:text-white transition-all text-xs sm:text-sm"
+          to={`/property-details/${_id}`}
+          onClick={() =>
+            window.scrollTo({ top: 0, behavior: "smooth" })
+          }
+          className="btn btn-outline btn-primary w-full font-medium hover:text-white text-sm sm:text-base transition-all"
         >
           View Details
         </Link>

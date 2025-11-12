@@ -7,12 +7,16 @@ import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router';
 import { auth } from '../firebase/firebase.init';
 
+import usePageTitle from '../hooks/usePageTitle';
+
 const Register = () => {
   const [error, setError] = useState('');
   const [googleError, setGoogleError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const { createUser, setUser, signInGoogleUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  usePageTitle("Register | HomeNest Real Estate");
 
   const handleGoogleSignIn = () => {
     setGoogleError('');
@@ -126,8 +130,11 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-base-100  animate-fade-in-center mt-4 sm:mt-6 md:mt-8 lg:mt-10">
-      <div className=" w-11/12 mx-auto max-w-md bg-base-200 shadow-xl border border-base-300 p-6 rounded-2xl">
+
+
+
+      <div className="flex justify-center items-center min-h-screen bg-base-200  py-4 sm:py-6 md:py-8 lg:py-10">
+      <div className=" w-11/12 mx-auto max-w-md bg-base-200 shadow-xl border border-base-300 p-6 rounded-2xl animate-fade-in-center ">
         <h2 className="text-2xl font-bold text-center mb-6 border-b border-base-300 pb-4">
           Create Your Account
         </h2>
@@ -214,6 +221,10 @@ const Register = () => {
         </p>
       </div>
     </div>
+
+
+
+    
   );
 };
 
