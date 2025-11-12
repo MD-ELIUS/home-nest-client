@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { AuthContext } from "../provider/AuthContext";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import LoadingData from "../Loader/LoadingData";
 import usePageTitle from "../hooks/usePageTitle";
 
@@ -16,6 +16,8 @@ const MyProperties = () => {
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(true);
   const { user } = use(AuthContext);
+  const navigate = useNavigate();
+
 
    usePageTitle("My Property | HomeNest Real Estate");
 
@@ -49,6 +51,7 @@ const MyProperties = () => {
       if (result.isConfirmed) {
         try {
           await axiosSecure.delete(`/properties/${id}`);
+          await axiosSecure.delete(`/reviews?propertyId=${id}`);
           setProperties(properties.filter((p) => p._id !== id));
           MySwal.fire("Deleted!", "Property has been deleted.", "success");
         } catch (error) {
@@ -100,6 +103,8 @@ const MyProperties = () => {
           timer: 1500,
         });
 
+         navigate(`/property-details/${id}`, { state: updatedProperty });
+
         setProperties((prev) =>
           prev.map((p) => (p._id === id ? { ...p, ...updatedProperty } : p))
         );
@@ -141,15 +146,15 @@ const MyProperties = () => {
               {properties.map((property) => (
                 <div
                   key={property._id}
-                  className="bg-base-100 dark:bg-base-200 border border-base-300 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+                  className="bg-base-200  border border-base-300 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden animate-left-to-center"
                 >
                   <img
                     src={property.imageUrl}
                     alt={property.propertyName}
                     className="w-full h-44 sm:h-48 object-cover"
                   />
-                  <div className="p-4 sm:p-5 space-y-1 sm:space-y-2">
-                    <h2 className="text-lg sm:text-xl font-semibold text-primary dark:text-primary truncate animate-left-to-center">
+                  <div className="p-4 sm:p-5 space-y-1 sm:space-y-2 animate-fade-in-center">
+                    <h2 className="text-lg sm:text-xl font-semibold text-primary dark:text-primary truncate ">
                       {property.propertyName}
                     </h2>
                     <p className=" text-sm font-medium">
@@ -176,13 +181,13 @@ const MyProperties = () => {
                     <div className="flex flex-col md:flex-row gap-2 mt-3">
                       <button
                         onClick={() => handleUpdateClick(property)}
-                        className="w-full sm:flex-1 btn btn-outline btn-success"
+                        className="w-full sm:flex-1 btn btn-outline btn-success animate-fade-in-center"
                       >
                         Update
                       </button>
                       <button
                         onClick={() => handleDelete(property._id)}
-                        className="w-full sm:flex-1 btn btn-outline btn-error"
+                        className="w-full sm:flex-1 btn btn-outline btn-error animate-fade-in-center"
                       >
                         Delete
                       </button>
@@ -191,7 +196,7 @@ const MyProperties = () => {
                         onClick={() =>
                           window.scrollTo({ top: 0, behavior: "smooth" })
                         }
-                        className="w-full sm:flex-1 btn btn-outline btn-primary"
+                        className="w-full sm:flex-1 btn btn-outline btn-primary animate-fade-in-center"
                       >
                         View Details
                       </Link>
@@ -290,12 +295,12 @@ const MyProperties = () => {
 
               <div>
                 <label className="text-sm font-medium text-gray-600">
-                  Description(Upto 1200 Character)
+                  Description(Upto 1000 Character)
                 </label>
                 <textarea
                   name="description"
                   defaultValue={selectedProperty.description}
-                   maxLength={1200}
+                   maxLength={1000}
                   className="w-full textarea outline-none h-24  "
                 ></textarea>
               </div>

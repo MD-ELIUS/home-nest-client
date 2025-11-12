@@ -56,7 +56,7 @@ const AllProperties = () => {
         </h2>
 
         {/* ---- Filter Controls ---- */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 bg-base-100 p-4 rounded-xl shadow-sm border border-base-300">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 bg-base-200 p-4 rounded-xl shadow-sm border border-base-300">
           {/* Search */}
           <input
             type="text"
@@ -89,7 +89,7 @@ const AllProperties = () => {
         ) : (
           <>
             {/* ---- Property Grid ---- */}
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 ">
               {properties.length > 0 ? (
                 properties.map((property) => (
                   <div key={property._id}>

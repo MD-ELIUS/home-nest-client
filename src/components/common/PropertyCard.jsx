@@ -18,7 +18,7 @@ const PropertyCard = ({ property }) => {
 
   return (
     <div
-      className="card bg-base-100 dark:bg-base-200 border border-base-300 rounded-2xl shadow-md 
+      className="card bg-base-200 border border-base-300 rounded-2xl shadow-md 
         hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-left-to-center
         w-full md:max-w-md lg:max-w-lg mx-auto"
     >

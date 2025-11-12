@@ -42,6 +42,23 @@ usePageTitle(property ? `${property.propertyName} | HomeNest Real Estate` : "Pro
 }, [id, user, axiosSecure]);
 
 
+// after reviews state update
+useEffect(() => {
+  if (id && user?.email && user?.accessToken) {
+    axiosSecure
+      .get(`/reviews?propertyId=${id}`)
+      .then((res) => setReviews(res.data))
+      .catch((err) => console.error("Error fetching reviews:", err));
+  }
+}, [id, user, axiosSecure]);
+
+// check if current user already reviewed
+const userHasReviewed = reviews.some(
+  (rev) => rev.reviewerEmail === user?.email
+);
+
+
+
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
 
@@ -104,6 +121,35 @@ usePageTitle(property ? `${property.propertyName} | HomeNest Real Estate` : "Pro
     }
   };
 
+
+const handleReviewDelete = async (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#5BA600",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        const res = await axiosSecure.delete(`/reviews/${id}`);
+        if (res.data?.success && res.data?.deletedCount > 0) {
+          setReviews((prev) => prev.filter((rev) => rev._id !== id));
+          Swal.fire("Deleted!", "Your review has been deleted.", "success");
+        } else {
+          Swal.fire("Error!", "Failed to delete the review.", "error");
+        }
+      } catch (error) {
+        console.error("Error deleting review:", error);
+        Swal.fire("Error!", "Something went wrong while deleting.", "error");
+      }
+    }
+  });
+};
+
+
   if (!property || loading) {
     return <LoadingData></LoadingData>;
   }
@@ -126,122 +172,43 @@ usePageTitle(property ? `${property.propertyName} | HomeNest Real Estate` : "Pro
       {/* Property Card */}
       <div className="grid grid-cols-1 xl:grid-cols-2  gap-5 animate-fade-in-center">
         {/* Left Image */}
-        <div className='flex flex-col gap-5'>
-          <img
-            src={imageUrl || 'https://i.ibb.co/5RHR6QZ/placeholder-image.jpg'}
-            alt={propertyName}
-            className="w-full rounded-xl object-cover"
-          />
+<div className='flex flex-col gap-5 relative'>
+  <img
+    src={imageUrl || 'https://i.ibb.co/5RHR6QZ/placeholder-image.jpg'}
+    alt={propertyName}
+    className="w-full rounded-xl shadow-md object-cover"
+  />
+  
+  {/* My Listing Tag */}
+  {user?.email === userEmail && (
+    <div className="absolute top-2 right-2 bg-primary text-white text-[10px] sm:text-xs font-medium px-2 py-1 rounded-md shadow">
+      My Listing
+    </div>
+  )}
+</div>
 
-          {/* Posted By */}
-          <div className="xl:flex hidden items-center gap-3 mt-6 bg-base-200 rounded-xl p-3 shadow-sm">
-            <img
-              src={userImage ? userImage : userImg}
-              alt="Posted By"
-              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-secondary object-cover"
-            />
-            <div>
-              <p className="font-semibold text-secondary text-base sm:text-lg">
-                {userName || "Unknown User"}
-              </p>
-              <p className="text-sm text-secondary/70">
-                {userEmail || "No email available"}
-              </p>
-            </div>
-          </div>
-
-             {/* Info Grid */}
-          <div className="xl:grid hidden  grid-cols-1 gap-2 mt-4">
-            <div className='flex flex-col gap-2 md:flex-row justify-between'>
-              <div className='flex gap-1 items-center'>
-                <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
-                  Price:
-                </p>
-                <span className="font-medium">${price}</span>
-              </div>
-
-              <div className='flex gap-1 items-center'>
-                <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
-                  Category:
-                </p>
-                <span className="font-medium">{category}</span>
-              </div>
-            </div>
-
-            <div className='flex flex-col gap-2 md:flex-row justify-between'>
-              <div className='flex gap-1 items-center'>
-                <FaMapMarkerAlt className="text-lg text-secondary/90 sm:text-xl" />
-                <p className="font-medium text-base flex items-center gap-1">
-                  {location}
-                </p>
-              </div>
-
-              <div className='flex gap-1 items-center'>
-                <FaCalendarAlt className="text-secondary/90 sm:text-xl" />
-                <p className="font-medium text-base flex items-center gap-2">
-                  {new Date(created_at).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Right Details */}
-        <div>
+        <div className='bg-base-200 rounded-xl border border-base-300 p-3 shadow-md'>
           <h2 className="text-xl sm:text-2xl font-bold text-primary animate-left-to-center">
             {propertyName}
           </h2>
-          <p className="text-lg leading-relaxed animate-right-to-center">
+          <p className="text-base opacity-80 leading-relaxed animate-right-to-center">
             {description}
           </p>
 
-          {/* Info Grid */}
-          <div className="grid xl:hidden  grid-cols-1 gap-2 mt-4">
-            <div className='flex flex-col gap-2 md:flex-row justify-between'>
-              <div className='flex gap-1 items-center'>
-                <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
-                  Price:
-                </p>
-                <span className="font-medium">${price}</span>
-              </div>
+        </div>
+      </div>
 
-              <div className='flex gap-1 items-center'>
-                <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
-                  Category:
-                </p>
-                <span className="font-medium">{category}</span>
-              </div>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 xl:gap-5 animate-fade-in-center">
+
+              {/* Posted By */}
+          <div className=" flex flex-col md:justify-between md:items-center md:flex-row gap-2 mt-6 bg-base-200 rounded-xl p-3 shadow-md border border-base-300 ">
+            <div>
+               <p className=' font-medium'>Posted by</p>
             </div>
-
-            <div className='flex flex-col gap-2 md:flex-row justify-between'>
-              <div className='flex gap-1 items-center'>
-                <FaMapMarkerAlt className="text-lg text-secondary/90 sm:text-xl" />
-                <p className="font-medium text-base flex items-center gap-1">
-                  {location}
-                </p>
-              </div>
-
-              <div className='flex gap-1 items-center'>
-                <FaCalendarAlt className="text-secondary/90 sm:text-xl" />
-                <p className="font-medium text-base flex items-center gap-2">
-                  {new Date(created_at).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </p>
-              </div>
-            </div>
-          </div>
-
-
-             {/* Posted By */}
-          <div className="flex xl:hidden items-center gap-3 mt-6 bg-base-200 rounded-xl p-3 shadow-sm">
-            <img
+            <div className='flex items-center gap-3'>
+                <img
               src={userImage ? userImage : userImg}
               alt="Posted By"
               className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-secondary object-cover"
@@ -253,41 +220,87 @@ usePageTitle(property ? `${property.propertyName} | HomeNest Real Estate` : "Pro
               <p className="text-sm text-secondary/70">
                 {userEmail || "No email available"}
               </p>
+            </div>
             </div>
           </div>
 
           
-        </div>
+{/* Info Grid */}
+          <div className="grid  grid-cols-1 gap-2 mt-6 bg-base-200 rounded-xl p-3 shadow-md border border-base-300 ">
+            <div className='flex flex-col gap-2 md:flex-row justify-between'>
+              <div className='flex gap-1 items-center'>
+                <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
+                  Price:
+                </p>
+                <span className="font-medium">${price}</span>
+              </div>
+
+              <div className='flex gap-1 items-center'>
+                <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
+                  Category:
+                </p>
+                <span className="font-medium">{category}</span>
+              </div>
+            </div>
+
+            <div className='flex flex-col gap-2 md:flex-row justify-between'>
+              <div className='flex gap-1 items-center'>
+                <FaMapMarkerAlt className="text-lg text-secondary/90 sm:text-xl" />
+                <p className="font-medium text-base flex items-center gap-1">
+                  {location}
+                </p>
+              </div>
+
+              <div className='flex gap-1 items-center'>
+                <FaCalendarAlt className="text-secondary/90 sm:text-xl" />
+                <p className="font-medium text-base flex items-center gap-2">
+                  {new Date(created_at).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+        
       </div>
 
       {/* Ratings & Reviews Section */}
-      <div className="mt-10 bg-base-100 border border-base-300 shadow-md rounded-2xl p-4 sm:p-6">
+      <div className="mt-10 bg-base-200 border border-base-300 shadow-md rounded-2xl p-4 sm:p-6">
         <h3 className="text-xl sm:text-2xl font-bold text-primary mb-4">Ratings & Reviews</h3>
 
         {/* Review Form */}
-       {
-        user.email === userEmail ||  <form
-          onSubmit={handleReviewSubmit}
-          className="bg-base-200 p-4 sm:p-6 rounded-xl space-y-4"
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-            <label className="font-semibold text-secondary">Your Rating:</label>
-            <Rating
-              style={{ maxWidth: 160 }}
-              value={rating}
-              onChange={setRating}
-            />
-          </div>
-          <textarea
-            name="reviewText"
-            placeholder="Write a short review..."
-            className="textarea outline-none w-full h-24 resize-none"
-          ></textarea>
-          <button type="submit" className="btn btn-primary btn-outline w-full sm:w-auto">
-            Submit Review
-          </button>
-        </form>
-       }
+     {
+  user?.email === userEmail || userHasReviewed ? (
+    <p className="text-center text-sm md:text-base text-secondary/70 font-medium bg-base-300 py-3 rounded-lg">
+      {userHasReviewed
+        ? "You have already submitted a review for this property."
+        : "You cannot review your own property."}
+    </p>
+  ) : (
+    <form
+      onSubmit={handleReviewSubmit}
+      className="bg-base-200 p-4 sm:p-6 rounded-xl space-y-4"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+        <label className="font-semibold text-secondary">Your Rating:</label>
+        <Rating style={{ maxWidth: 160 }} value={rating} onChange={setRating} />
+      </div>
+      <textarea
+        name="reviewText"
+        placeholder="Write a short review..."
+        className="textarea outline-none w-full h-24 resize-none"
+      ></textarea>
+      <button type="submit" className="btn btn-primary btn-outline w-full sm:w-auto">
+        Submit Review
+      </button>
+    </form>
+  )
+}
+
 
    {/* Review List */}
 {/* Review List */}
@@ -296,9 +309,10 @@ usePageTitle(property ? `${property.propertyName} | HomeNest Real Estate` : "Pro
     reviews.map((rev, idx) => (
       <div
         key={idx}
-        className="bg-base-200 p-3 sm:p-4 rounded-xl border border-base-300 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"
+        className="bg-base-200 p-3 sm:p-4 rounded-xl border border-base-300 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3"
       >
-        <img
+         <div className='flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4'>
+             <img
           src={rev.reviewerImage}
           alt={rev.reviewerName}
           className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
@@ -306,13 +320,28 @@ usePageTitle(property ? `${property.propertyName} | HomeNest Real Estate` : "Pro
         <div className="flex-1">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
             <h4 className="font-semibold text-secondary">{rev.reviewerName}</h4>
-            <span className="text-sm text-secondary/60 mt-1 sm:mt-0">
-              {new Date(rev.reviewDate).toLocaleDateString()}
-            </span>
           </div>
           <Rating style={{ maxWidth: 120 }} readOnly value={rev.rating} />
           <p className="text-secondary/80 mt-1">{rev.reviewText}</p>
         </div>
+         </div>
+
+         <div>
+              <span className="text-sm flex sm:flex-col flex-row justify-between items-center gap-2 text-secondary/60 mt-1 sm:mt-0">
+                {new Date(rev.reviewDate).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric",
+                      })}
+               {
+                (user.email === rev.reviewerEmail || user.email === userEmail) && <button onClick={() => handleReviewDelete(rev._id)} className='btn btn-error btn-outline'>
+                    Remove
+                </button>
+              }
+            </span>
+         </div>
+
+         
       </div>
     ))
   ) : (
@@ -331,3 +360,113 @@ usePageTitle(property ? `${property.propertyName} | HomeNest Real Estate` : "Pro
 };
 
 export default PropertyDetails;
+
+
+//    {/* Posted By */}
+//           <div className="xl:flex hidden items-center gap-3 mt-6 bg-base-200 rounded-xl p-3 shadow-sm">
+//             <img
+//               src={userImage ? userImage : userImg}
+//               alt="Posted By"
+//               className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-secondary object-cover"
+//             />
+//             <div>
+//               <p className="font-semibold text-secondary text-base sm:text-lg">
+//                 {userName || "Unknown User"}
+//               </p>
+//               <p className="text-sm text-secondary/70">
+//                 {userEmail || "No email available"}
+//               </p>
+//             </div>
+//           </div>
+
+
+//  {/* Info Grid */}
+//           <div className="xl:grid hidden  grid-cols-1 gap-2 mt-4">
+//             <div className='flex flex-col gap-2 md:flex-row justify-between'>
+//               <div className='flex gap-1 items-center'>
+//                 <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
+//                   Price:
+//                 </p>
+//                 <span className="font-medium">${price}</span>
+//               </div>
+
+//               <div className='flex gap-1 items-center'>
+//                 <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
+//                   Category:
+//                 </p>
+//                 <span className="font-medium">{category}</span>
+//               </div>
+//             </div>
+
+//             <div className='flex flex-col gap-2 md:flex-row justify-between'>
+//               <div className='flex gap-1 items-center'>
+//                 <FaMapMarkerAlt className="text-lg text-secondary/90 sm:text-xl" />
+//                 <p className="font-medium text-base flex items-center gap-1">
+//                   {location}
+//                 </p>
+//               </div>
+
+//               <div className='flex gap-1 items-center'>
+//                 <FaCalendarAlt className="text-secondary/90 sm:text-xl" />
+//                 <p className="font-medium text-base flex items-center gap-2">
+//                   {new Date(created_at).toLocaleDateString("en-GB", {
+//                     day: "2-digit",
+//                     month: "long",
+//                     year: "numeric",
+//                   })}
+//                 </p>
+//               </div>
+//             </div>
+//           </div>
+
+
+
+// {/* Info Grid */}
+//           <div className="grid xl:hidden  grid-cols-1 gap-2 mt-4">
+//             <div className='flex flex-col gap-2 md:flex-row justify-between'>
+//               <div className='flex gap-1 items-center'>
+//                 <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
+//                   Price:
+//                 </p>
+//                 <span className="font-medium">${price}</span>
+//               </div>
+
+//               <div className='flex gap-1 items-center'>
+//                 <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
+//                   Category:
+//                 </p>
+//                 <span className="font-medium">{category}</span>
+//               </div>
+//             </div>
+
+//             <div className='flex flex-col gap-2 md:flex-row justify-between'>
+//               <div className='flex gap-1 items-center'>
+//                 <FaMapMarkerAlt className="text-lg text-secondary/90 sm:text-xl" />
+//                 <p className="font-medium text-base flex items-center gap-1">
+//                   {location}
+//                 </p>
+//               </div>
+
+//               <div className='flex gap-1 items-center'>
+//                 <FaCalendarAlt className="text-secondary/90 sm:text-xl" />
+//                 <p className="font-medium text-base flex items-center gap-2">
+//                   {new Date(created_at).toLocaleDateString("en-GB", {
+//                     day: "2-digit",
+//                     month: "long",
+//                     year: "numeric",
+//                   })}
+//                 </p>
+//               </div>
+//             </div>
+//           </div>
+
+
+
+//  <span className="text-sm flex flex-col text-secondary/60 mt-1 sm:mt-0">
+//               {new Date(rev.reviewDate).toLocaleDateString()}
+//                {
+//                 user.email === rev.reviewerEmail && <button className='btn btn-error btn-outline'>
+//                     Remove
+//                 </button>
+//               }
+//             </span>
