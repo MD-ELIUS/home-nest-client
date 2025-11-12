@@ -7,6 +7,8 @@ import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import userImg from ".././assets/avatar.png";
 import { FaMoneyBillWave, FaMapMarkerAlt, FaTags, FaCalendarAlt } from "react-icons/fa";
+import LoadingData from '../Loader/LoadingData';
+import Swal from 'sweetalert2';
 
 const PropertyDetails = () => {
   const { id } = useParams();
@@ -14,43 +16,96 @@ const PropertyDetails = () => {
   const axiosSecure = useAxiosSecure();
   const [property, setProperty] = useState(null);
   const [rating, setRating] = useState(0);
-  const [reviewText, setReviewText] = useState('');
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  usePageTitle('Property Details | HomeNest Real Estate');
+usePageTitle(property ? `${property.propertyName} | HomeNest Real Estate` : "Property Details | HomeNest Real Estate");
+
 
   useEffect(() => {
+    setLoading(true);
     if (user?.email && user?.accessToken && id) {
       axiosSecure
         .get(`/properties/${id}`)
-        .then((data) => setProperty(data.data))
+        .then((data) => setProperty(data.data), setLoading(false))
         .catch((err) => console.error('Error fetching property:', err));
     }
   }, [id, user, axiosSecure]);
 
-  const handleReviewSubmit = (e) => {
+  useEffect(() => {
+  if (id && user?.email && user?.accessToken) {
+    axiosSecure
+      .get(`/reviews?propertyId=${id}`)
+      .then((res) => setReviews(res.data))
+      .catch((err) => console.error('Error fetching reviews:', err));
+  }
+}, [id, user, axiosSecure]);
+
+
+  const handleReviewSubmit = async (e) => {
     e.preventDefault();
-    if (!rating || !reviewText.trim()) return;
+
+    const reviewText = e.target.reviewText.value.trim();
+
+    if (!rating || !reviewText) {
+      Swal.fire({
+        icon: "warning",
+        title: "Please fill out all fields",
+        text: "Give a rating and write a short review.",
+        confirmButtonColor: "#5BA600",
+      });
+      return;
+    }
+
+    if (!user) {
+      Swal.fire({
+        icon: "error",
+        title: "Login Required",
+        text: "You must be logged in to submit a review.",
+        confirmButtonColor: "#5BA600",
+      });
+      return;
+    }
 
     const newReview = {
-      name: user?.displayName || 'Anonymous User',
-      photo: user?.photoURL || 'https://i.ibb.co/4mDPWxt/user.png',
+      reviewerName: user?.displayName || "Anonymous User",
+      reviewerEmail: user?.email || "Not provided",
+      reviewerImage: user?.photoURL || "https://i.ibb.co/4mDPWxt/user.png",
+      propertyId: id,
+      propertyName: property?.propertyName,
       rating,
-      review: reviewText,
-      date: new Date().toISOString(),
+      reviewText,
+      reviewDate: new Date().toISOString(),
     };
 
-    setReviews((prev) => [newReview, ...prev]);
-    setRating(0);
-    setReviewText('');
+    try {
+      const response = await axiosSecure.post("/reviews", newReview);
+
+      if (response.data.insertedId) {
+        Swal.fire({
+          icon: "success",
+          title: "Review Submitted!",
+          text: "Your review has been added successfully.",
+          confirmButtonColor: "#5BA600",
+        });
+      }
+
+      setReviews((prev) => [newReview, ...prev]);
+      setRating(0);
+      e.target.reset();
+    } catch (err) {
+      console.error("Error submitting review:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Failed!",
+        text: "Could not submit your review. Try again later.",
+        confirmButtonColor: "#5BA600",
+      });
+    }
   };
 
-  if (!property) {
-    return (
-      <div className="flex justify-center items-center h-[60vh]">
-        <span className="loading loading-spinner text-primary"></span>
-      </div>
-    );
+  if (!property || loading) {
+    return <LoadingData></LoadingData>;
   }
 
   const {
@@ -63,107 +118,155 @@ const PropertyDetails = () => {
     created_at,
     userName,
     userEmail,
-    userImage
+    userImage,
   } = property;
 
   return (
     <div className="w-11/12 mx-auto px-4 py-4 sm:py-6 md:py-8 lg:py-10 ">
       {/* Property Card */}
-    <div className="grid grid-cols-1 xl:grid-cols-2 items-center gap-5 animate-fade-in-center">
-    {/* Left Image */}
-    <div className="  ">
-      <img
-        src={imageUrl || 'https://i.ibb.co/5RHR6QZ/placeholder-image.jpg'}
-        alt={propertyName}
-        className="w-full rounded-xl  object-cover"
-      />
-      
-    </div>
+      <div className="grid grid-cols-1 xl:grid-cols-2  gap-5 animate-fade-in-center">
+        {/* Left Image */}
+        <div className='flex flex-col gap-5'>
+          <img
+            src={imageUrl || 'https://i.ibb.co/5RHR6QZ/placeholder-image.jpg'}
+            alt={propertyName}
+            className="w-full rounded-xl object-cover"
+          />
 
-    {/* Right Details */}
-    <div className=" ">
-      <h2 className="text-xl sm:text-2xl font-bold text-primary animate-left-to-center">
-        {propertyName}
-      </h2>
-      <p className="text-lg  leading-relaxed font-medium animate-right-to-center">
-        {description}
-      </p>
+          {/* Posted By */}
+          <div className="xl:flex hidden items-center gap-3 mt-6 bg-base-200 rounded-xl p-3 shadow-sm">
+            <img
+              src={userImage ? userImage : userImg}
+              alt="Posted By"
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-secondary object-cover"
+            />
+            <div>
+              <p className="font-semibold text-secondary text-base sm:text-lg">
+                {userName || "Unknown User"}
+              </p>
+              <p className="text-sm text-secondary/70">
+                {userEmail || "No email available"}
+              </p>
+            </div>
+          </div>
 
-      {/* Info Grid */}
-      <div className="grid grid-cols-1 gap-2 mt-4">
+             {/* Info Grid */}
+          <div className="xl:grid hidden  grid-cols-1 gap-2 mt-4">
+            <div className='flex flex-col gap-2 md:flex-row justify-between'>
+              <div className='flex gap-1 items-center'>
+                <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
+                  Price:
+                </p>
+                <span className="font-medium">${price}</span>
+              </div>
 
-        <div className='flex flex-col gap-2  md:flex-row justify-between'>
-
-            <div className='flex gap-1 items-center'>
-                 <p className="font-medium text-base text-secondary/90  flex items-center gap-2">
-            Price: 
-        </p>
-        <span className=" font-medium">${price}</span>
+              <div className='flex gap-1 items-center'>
+                <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
+                  Category:
+                </p>
+                <span className="font-medium">{category}</span>
+              </div>
             </div>
 
-             <div className='flex gap-1 items-center'>
-                 <p className="font-medium text-base text-secondary/90  flex items-center gap-2">
-            Category:
-        </p>
-        <span className=" font-medium">{category}</span>
+            <div className='flex flex-col gap-2 md:flex-row justify-between'>
+              <div className='flex gap-1 items-center'>
+                <FaMapMarkerAlt className="text-lg text-secondary/90 sm:text-xl" />
+                <p className="font-medium text-base flex items-center gap-1">
+                  {location}
+                </p>
+              </div>
+
+              <div className='flex gap-1 items-center'>
+                <FaCalendarAlt className="text-secondary/90 sm:text-xl" />
+                <p className="font-medium text-base flex items-center gap-2">
+                  {new Date(created_at).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+              </div>
             </div>
-
-        
-
+          </div>
         </div>
-       
-    <div className='flex flex-col gap-2 md:flex-row justify-between'>
 
-<div className='flex gap-1 items-center'>
-     <FaMapMarkerAlt className=" text-lg text-secondary/90 sm:text-xl" />
-        <p className="font-medium text-base  flex items-center gap-1">
-         
-          {location}
-        </p>
-</div>
-       
-       <div className='flex gap-1 items-center'>
-           <FaCalendarAlt className=" text-secondary/90 sm:text-xl" />
-            <p className="font-medium text-base  flex items-center gap-2">
-            {new Date(created_at).toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-            })}
-         
-        </p>
-       </div>
-
-           
-    </div>
-           
-      </div>
-
-      {/* Posted By */}
-      <div className="flex items-center gap-3 mt-6 bg-base-200 rounded-xl p-3 shadow-sm">
-        <img
-          src={userImage ? userImage : userImg}
-          alt="Posted By"
-          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-secondary object-cover"
-        />
+        {/* Right Details */}
         <div>
-          <p className="font-semibold text-secondary text-base sm:text-lg">
-            {userName || "Unknown User"}
+          <h2 className="text-xl sm:text-2xl font-bold text-primary animate-left-to-center">
+            {propertyName}
+          </h2>
+          <p className="text-lg leading-relaxed animate-right-to-center">
+            {description}
           </p>
-          <p className="text-sm text-secondary/70">
-            {userEmail || "No email available"}
-          </p>
+
+          {/* Info Grid */}
+          <div className="grid xl:hidden  grid-cols-1 gap-2 mt-4">
+            <div className='flex flex-col gap-2 md:flex-row justify-between'>
+              <div className='flex gap-1 items-center'>
+                <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
+                  Price:
+                </p>
+                <span className="font-medium">${price}</span>
+              </div>
+
+              <div className='flex gap-1 items-center'>
+                <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
+                  Category:
+                </p>
+                <span className="font-medium">{category}</span>
+              </div>
+            </div>
+
+            <div className='flex flex-col gap-2 md:flex-row justify-between'>
+              <div className='flex gap-1 items-center'>
+                <FaMapMarkerAlt className="text-lg text-secondary/90 sm:text-xl" />
+                <p className="font-medium text-base flex items-center gap-1">
+                  {location}
+                </p>
+              </div>
+
+              <div className='flex gap-1 items-center'>
+                <FaCalendarAlt className="text-secondary/90 sm:text-xl" />
+                <p className="font-medium text-base flex items-center gap-2">
+                  {new Date(created_at).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+             {/* Posted By */}
+          <div className="flex xl:hidden items-center gap-3 mt-6 bg-base-200 rounded-xl p-3 shadow-sm">
+            <img
+              src={userImage ? userImage : userImg}
+              alt="Posted By"
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-secondary object-cover"
+            />
+            <div>
+              <p className="font-semibold text-secondary text-base sm:text-lg">
+                {userName || "Unknown User"}
+              </p>
+              <p className="text-sm text-secondary/70">
+                {userEmail || "No email available"}
+              </p>
+            </div>
+          </div>
+
+          
         </div>
       </div>
-    </div>
-  </div>
 
       {/* Ratings & Reviews Section */}
       <div className="mt-10 bg-base-100 border border-base-300 shadow-md rounded-2xl p-4 sm:p-6">
         <h3 className="text-xl sm:text-2xl font-bold text-primary mb-4">Ratings & Reviews</h3>
 
         {/* Review Form */}
-        <form
+       {
+        user.email === userEmail ||  <form
           onSubmit={handleReviewSubmit}
           className="bg-base-200 p-4 sm:p-6 rounded-xl space-y-4"
         >
@@ -176,47 +279,52 @@ const PropertyDetails = () => {
             />
           </div>
           <textarea
-            value={reviewText}
-            onChange={(e) => setReviewText(e.target.value)}
+            name="reviewText"
             placeholder="Write a short review..."
-            className="textarea outline-none  w-full h-24 resize-none"
-          />
+            className="textarea outline-none w-full h-24 resize-none"
+          ></textarea>
           <button type="submit" className="btn btn-primary btn-outline w-full sm:w-auto">
             Submit Review
           </button>
         </form>
+       }
 
-        {/* Review List */}
-        <div className="mt-6 space-y-4">
-          {reviews.length > 0 ? (
-            reviews.map((rev, idx) => (
-              <div
-                key={idx}
-                className="bg-base-200 p-3 sm:p-4 rounded-xl border border-base-300 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"
-              >
-                <img
-                  src={rev.photo}
-                  alt={rev.name}
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
-                />
-                <div className="flex-1">
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                    <h4 className="font-semibold text-secondary">{rev.name}</h4>
-                    <span className="text-sm text-secondary/60 mt-1 sm:mt-0">
-                      {new Date(rev.date).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <Rating style={{ maxWidth: 120 }} readOnly value={rev.rating} />
-                  <p className="text-secondary/80 mt-1">{rev.review}</p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-secondary/70">
-              No reviews yet. Be the first to review this property!
-            </p>
-          )}
+   {/* Review List */}
+{/* Review List */}
+<div className="mt-6 space-y-4">
+  {reviews.length > 0 ? (
+    reviews.map((rev, idx) => (
+      <div
+        key={idx}
+        className="bg-base-200 p-3 sm:p-4 rounded-xl border border-base-300 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"
+      >
+        <img
+          src={rev.reviewerImage}
+          alt={rev.reviewerName}
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
+        />
+        <div className="flex-1">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <h4 className="font-semibold text-secondary">{rev.reviewerName}</h4>
+            <span className="text-sm text-secondary/60 mt-1 sm:mt-0">
+              {new Date(rev.reviewDate).toLocaleDateString()}
+            </span>
+          </div>
+          <Rating style={{ maxWidth: 120 }} readOnly value={rev.rating} />
+          <p className="text-secondary/80 mt-1">{rev.reviewText}</p>
         </div>
+      </div>
+    ))
+  ) : (
+    <p className="text-center text-secondary/70">
+      {user?.email === userEmail
+        ? "You have not received any reviews yet."
+        : "No reviews yet. Be the first to review this property!"}
+    </p>
+  )}
+</div>
+
+
       </div>
     </div>
   );

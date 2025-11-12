@@ -1,5 +1,6 @@
 import { Link } from "react-router";
-import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import logoImg from "../../assets/logo.png";
 import { use } from "react";
 import { AuthContext } from "../../provider/AuthContext";
@@ -38,8 +39,8 @@ export default function Footer() {
           <h3 className="text-lg font-semibold mb-3 text-primary">Contact Us</h3>
           <ul className="space-y-2 text-sm md:text-base text-secondary">
             <li>Email: <a href="https://mail.google.com" target="_blank" className="hover:text-primary">info@homenest.com</a></li>
-            <li>Phone: <a href="tel:+880123456789" className="hover:text-primary">+880 1234 567 890</a></li>
-            <li>Address: Barishal, Bangladesh</li>
+            <li>Phone: <a className="hover:text-primary cursor-pointer">+880 1234 567 890</a></li>
+            <li>Address: <a href="https://www.google.com/maps/place/23%C2%B049'28.5%22N+90%C2%B022'22.8%22E/@23.8245957,90.3715469,17z/data=!3m1!4b1!4m4!3m3!8m2!3d23.824593!4d90.372992?entry=ttu&g_ep=EgoyMDI1MTEwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" className="hover:text-primary cursor-pointer">Mirpur, Dhaka,Bangladesh</a> </li>
           </ul>
         </div>
 
@@ -61,20 +62,20 @@ export default function Footer() {
           <h3 className="text-lg font-semibold mb-3 text-primary">Follow Us</h3>
           <div className="flex gap-4 text-secondary">
             <a href="https://facebook.com" target="_blank" rel="noreferrer"
-              className="btn btn-circle btn-outline btn-sm hover:bg-primary hover:border-primary hover:text-white">
-              <FaFacebookF />
+              className="btn btn-circle btn-outline btn-md hover:bg-primary hover:border-primary hover:text-white">
+              <FaFacebookF size={16} />
             </a>
             <a href="https://instagram.com" target="_blank" rel="noreferrer"
-              className="btn btn-circle btn-outline btn-sm hover:bg-primary hover:border-primary hover:text-white">
-              <FaInstagram />
+              className="btn btn-circle btn-outline btn-md hover:bg-primary hover:border-primary hover:text-white">
+              <FaInstagram size={16} />
             </a>
             <a href="https://twitter.com" target="_blank" rel="noreferrer"
-              className="btn btn-circle btn-outline btn-sm hover:bg-primary hover:border-primary hover:text-white">
-              <FaTwitter />
+              className="btn btn-circle btn-outline btn-md hover:bg-primary hover:border-primary hover:text-white">
+              <FaXTwitter size={16} />
             </a>
             <a href="https://linkedin.com" target="_blank" rel="noreferrer"
-              className="btn btn-circle btn-outline btn-sm hover:bg-primary hover:border-primary hover:text-white">
-              <FaLinkedinIn />
+              className="btn btn-circle btn-outline btn-md hover:bg-primary hover:border-primary hover:text-white">
+              <FaLinkedinIn size={16} />
             </a>
           </div>
         </div>

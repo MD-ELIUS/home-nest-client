@@ -86,10 +86,11 @@ const newProperty = {
 
           {/* Description */}
           <div>
-            <label className="label font-semibold">Description</label>
+            <label className="label font-semibold">Description(Upto 1200 Character)</label>
             <textarea
               name="description"
               required
+              maxLength={1200}
               placeholder="Enter property description"
               className="textarea w-full bg-base-200 focus:outline-none focus:ring-0 h-24"
             ></textarea>

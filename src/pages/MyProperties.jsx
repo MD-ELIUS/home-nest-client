@@ -149,20 +149,20 @@ const MyProperties = () => {
                     className="w-full h-44 sm:h-48 object-cover"
                   />
                   <div className="p-4 sm:p-5 space-y-1 sm:space-y-2">
-                    <h2 className="text-lg sm:text-xl font-semibold text-secondary dark:text-primary truncate animate-left-to-center">
+                    <h2 className="text-lg sm:text-xl font-semibold text-primary dark:text-primary truncate animate-left-to-center">
                       {property.propertyName}
                     </h2>
-                    <p className="text-gray-600 dark:text-neutral text-sm font-medium">
-                      Category: {property.category}
+                    <p className=" text-sm font-medium">
+                      <span className="text-secondary">Category: </span> {property.category}
                     </p>
-                    <p className="text-gray-600 dark:text-neutral text-sm font-medium">
-                      Price: {property.price}
+                    <p className=" text-sm font-medium">
+                      <span className="text-secondary">Price: </span> {property.price}
                     </p>
-                    <p className="text-gray-600 dark:text-neutral text-sm font-medium">
-                      Location: {property.location}
+                    <p className=" text-sm font-medium">
+                      <span className="text-secondary">Location: </span> {property.location}
                     </p>
-                    <p className="text-gray-500 dark:text-neutral text-sm font-medium">
-                      Posted:{" "}
+                    <p className=" text-sm font-medium">
+                      <span className="text-secondary">Posted:{" "} </span>
                       {new Date(property.created_at).toLocaleDateString(
                         "en-GB",
                         {
@@ -290,13 +290,13 @@ const MyProperties = () => {
 
               <div>
                 <label className="text-sm font-medium text-gray-600">
-                  Description
+                  Description(Upto 1200 Character)
                 </label>
                 <textarea
                   name="description"
                   defaultValue={selectedProperty.description}
-                  
-                  className="w-full textarea outline-none h-24  resize-none"
+                   maxLength={1200}
+                  className="w-full textarea outline-none h-24  "
                 ></textarea>
               </div>
 

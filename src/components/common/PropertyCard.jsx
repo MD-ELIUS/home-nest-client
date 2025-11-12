@@ -39,23 +39,23 @@ const PropertyCard = ({ property }) => {
 
       {/* Card Body */}
       <div className="card-body p-3 sm:p-4 md:p-5 space-y-2">
-        <h3 className="text-sm sm:text-base md:text-lg font-semibold text-secondary truncate">
+        <h3 className="text-sm sm:text-base md:text-lg font-semibold text-primary truncate">
           {propertyName || "Untitled Property"}
         </h3>
 
-        <p className="text-sm sm:text-base text-gray-500 font-medium dark:text-neutral">
-          Category: <span className="font-medium text-primary">{category}</span>
+        <p className="text-sm sm:text-base   font-medium ">
+         <span className="text-secondary ">Category: </span>  <span>{category}</span>
         </p>
 
-        <p className="text-sm sm:text-base font-medium text-gray-500 dark:text-neutral  line-clamp-3">
+        <p className="text-sm sm:text-base  font-medium opacity-80 line-clamp-3 min-h-[4rem]">
           {description || "No description available."}
         </p>
 
-        <div className="flex items-center font-medium justify-between text-sm sm:text-base text-gray-500 dark:text-gray-400 gap-1">
-          <span className="flex items-center gap-1 truncate sm:max-w-[60%]">
-            <MapPin size={16} /> {location}
+        <div className="flex items-center font-medium justify-between text-sm sm:text-base gap-1">
+          <span className="flex items-center gap-1  overflow-hidden whitespace-nowrap max-w-[60%] ">
+            <MapPin className="text-secondary flex-shrink-0" size={16} /> <span className="overflow-hidden text-ellipsis">{location || "Unknown"}</span>
           </span>
-          <span className="font-semibold text-primary">${price}</span>
+          <span className="font-semibold ">${price}</span>
         </div>
 
         <Link

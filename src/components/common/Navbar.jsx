@@ -62,7 +62,7 @@ export default function Navbar() {
             <div className=" w-11/12 mx-auto flex justify-between items-center py-2 sm:py-3 md:py-4">
 
                 {/* Left Section - Logo */}
-                <Link onClick={() => setMenuOpen(!menuOpen)} to="/" className="flex items-center gap-2 text-xl font-bold">
+                <Link  to="/" className="flex items-center gap-2 text-xl font-bold">
                     <div>
                         <img
                             className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 xl:h-16 xl:w-16 2xl:h-20 2xl:w-20"
