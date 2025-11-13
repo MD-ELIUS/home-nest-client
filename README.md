@@ -1,7 +1,7 @@
 # 🏡 HomeNest – A Real Estate Listing Portal
 
 ### 📁 Assignment Category: 0013  
-🎥 Video Link: `B12-A10_category-0013.mp4`  
+
 🌐 Live Site URL: [https://home-nest-5d146.web.app/]
 💻 Client Repository: [https://github.com/MD-ELIUS/home-nest-client]
 🖥️ Server Repository: [https://github.com/MD-ELIUS/home-nest-server] 
