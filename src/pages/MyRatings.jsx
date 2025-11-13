@@ -6,6 +6,7 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import LoadingData from "../Loader/LoadingData";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
 
 const MyRatings = () => {
   const { user } = useContext(AuthContext);
@@ -37,6 +38,36 @@ const MyRatings = () => {
         setLoadingProperties(false);
       });
   }, []);
+
+ // ✅ Delete Review Function
+  const handleDeleteReview = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Once deleted, you cannot undo this action!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#5BA600",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axiosSecure.delete(`/reviews/${id}`);
+
+          if (res.data?.success && res.data?.deletedCount > 0) {
+            setReviews((prev) => prev.filter((rev) => rev._id !== id));
+            Swal.fire("Deleted!", "Your review has been deleted.", "success");
+          } else {
+            Swal.fire("Error!", "Failed to delete the review.", "error");
+          }
+        } catch (err) {
+          console.error("Error deleting review:", err);
+          Swal.fire("Error!", "Something went wrong.", "error");
+        }
+      }
+    });
+  };
+
 
   const getPropertyInfo = (propertyId) => {
     return properties.find((p) => p._id === propertyId);
@@ -116,7 +147,8 @@ const MyRatings = () => {
                     </div>
                   </div>
 
-                  <div className="pt-4">
+                  <div className=" flex flex-col gap-2 pt-4">
+                    <button onClick={() => handleDeleteReview(rev._id)} className="btn btn-outline btn-error btn-sm w-full">Delete</button>
                     <Link
                       to={`/property-details/${property._id}`}
                       onClick={() =>

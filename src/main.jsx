@@ -15,12 +15,14 @@ import PropertyDetails from './pages/PropertyDetails.jsx';
 import PrivateRoute from './routes/PrivateRoute.jsx';
 import MyProperties from './pages/MyProperties.jsx';
 import MyRatings from './pages/MyRatings.jsx';
+import ErrorPage from './pages/ErrorPage.jsx';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    errorElement:<ErrorPage/>,
     children: [
       { 
         index: true,

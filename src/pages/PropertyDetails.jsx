@@ -122,32 +122,7 @@ const userHasReviewed = reviews.some(
   };
 
 
-const handleReviewDelete = async (id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#5BA600",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!"
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
-        const res = await axiosSecure.delete(`/reviews/${id}`);
-        if (res.data?.success && res.data?.deletedCount > 0) {
-          setReviews((prev) => prev.filter((rev) => rev._id !== id));
-          Swal.fire("Deleted!", "Your review has been deleted.", "success");
-        } else {
-          Swal.fire("Error!", "Failed to delete the review.", "error");
-        }
-      } catch (error) {
-        console.error("Error deleting review:", error);
-        Swal.fire("Error!", "Something went wrong while deleting.", "error");
-      }
-    }
-  });
-};
+
 
 
   if (!property || loading) {
@@ -334,11 +309,7 @@ const handleReviewDelete = async (id) => {
                         month: "long",
                         year: "numeric",
                       })}
-               {
-                (user.email === rev.reviewerEmail || user.email === userEmail) && <button onClick={() => handleReviewDelete(rev._id)} className='btn btn-error btn-outline'>
-                    Remove
-                </button>
-              }
+              
             </span>
          </div>
 

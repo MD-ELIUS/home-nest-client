@@ -20,13 +20,9 @@ export default function Footer() {
               alt="Logo"
               className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 lg:h-16 lg:w-16 2xl:h-20 2xl:w-20"
             />
-            <div className="font-bold ">
-              <span className="text-base-content text-[20px] lg:text-[22px] 2xl:text-[24px]">
-                Home
-              </span>
-              <span className="text-primary text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] 2xl:text-[28px]">
-                Nest
-              </span>
+            <div className="font-bold flex gap-[2px] ">
+             <span className=" text-base-content text-[20px] xl:text-[22px] 2xl:text-[24px]">Home</span>
+                        <span className="text-primary text-[20px] xl:text-[22px] 2xl:text-[24px]">Nest</span>
             </div>
           </div>
           <p className="text-sm md:text-base opacity-80 max-w-xs text-secondary">

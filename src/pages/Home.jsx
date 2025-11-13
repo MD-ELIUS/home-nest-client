@@ -5,6 +5,8 @@ import LoadingHome from '../Loader/LoadingHome';
 import FeaturedProperties from '../components/home/FeaturedProperties';
 import usePageTitle from '../hooks/usePageTitle';
 import WhyChooseUs from '../components/home/WhyChooseUs';
+import ExpertGuidance from '../components/home/ExpertGuidance';
+import FeaturedLocations from '../components/home/FeaturedLocations';
 
 const Home = () => {
 
@@ -17,6 +19,8 @@ const Home = () => {
             <Banner></Banner>
             <FeaturedProperties></FeaturedProperties>
             <WhyChooseUs></WhyChooseUs>
+            <ExpertGuidance></ExpertGuidance>
+            {/* <FeaturedLocations></FeaturedLocations> */}
         </div>
     
         

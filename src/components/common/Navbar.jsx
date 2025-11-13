@@ -70,9 +70,9 @@ export default function Navbar() {
                             alt=""
                         />
                     </div>
-                    <div>
-                        <span className="text-base-content text-[20px] xl:text-[22px] 2xl:text-[24px]">Home</span>
-                        <span className="text-primary text-[18px] sm:text-[20px] md:text-[22px] xl:text-[24px] 2xl:text-[28px]">Nest</span>
+                    <div className="flex gap-[2px]">
+                        <span className=" text-base-content text-[20px] xl:text-[22px] 2xl:text-[24px]">Home</span>
+                        <span className="text-primary text-[20px] xl:text-[22px] 2xl:text-[24px]">Nest</span>
                     </div>
                 </Link>
 
