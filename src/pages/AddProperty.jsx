@@ -46,10 +46,11 @@ const newProperty = {
        .then(data => {
         console.log('successfull data', data.data)
         if(data.data.insertedId) {
+            e.target.reset()
              Swal.fire({
                                     position: "center",
                                     icon: "success",
-                                    title: "Your bid has been placed successfully",
+                                    title: "Your property has been successfully added",
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
