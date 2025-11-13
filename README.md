@@ -1,16 +1,120 @@
-# React + Vite
+# 🏡 HomeNest – A Real Estate Listing Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 📁 Assignment Category: 0013  
+🎥 Video Link: `B12-A10_category-0013.mp4`  
+🌐 Live Site URL: [https://home-nest-5d146.web.app/]
+💻 Client Repository: [https://github.com/MD-ELIUS/home-nest-client]
+🖥️ Server Repository: [https://github.com/MD-ELIUS/home-nest-server] 
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🏠 Project Overview
 
-## React Compiler
+**HomeNest** is a modern and responsive **real estate listing platform** where users can explore, search, and manage property listings for rent, sale, or commercial purposes.  
+Property owners can post, update, and delete their listings, while users can rate and review properties after exploring detailed information.  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Built using the **MERN stack (MongoDB, Express, React, Node.js)** and **Firebase Authentication**, this project ensures a secure, fast, and user-friendly experience for all real estate enthusiasts.  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ✨ Key Features
+
+- 🔐 **Secure Authentication**  
+  Implemented Firebase Authentication with email/password and Google login.  
+  Firebase token used for protected API access (instead of JWT).
+
+- 🏘️ **Dynamic Property Management (CRUD)**  
+  Authenticated users can **add, edit, and delete** their own properties.  
+  All updates instantly reflect in the UI with SweetAlert confirmations.
+
+- 🌆 **All Properties Page**  
+  Displays all available listings with **sorting** (by price/date) and **search functionality** (by property name).  
+
+- 💬 **Ratings & Reviews**  
+  Authenticated users can rate and review properties with a star rating and short feedback text.  
+
+- 🎨 **Responsive Modern UI**  
+  Built using **Tailwind CSS**, maintaining consistent typography, button styles, and grid layouts.  
+  Includes **Dark/Light Mode** toggle.
+
+- 🏗️ **Extra Home Sections**  
+  - Why Choose Us  
+  - Featured Real Estates (dynamic)  
+  - Two additional custom sections enhancing user engagement  
+
+- 💡 **User Dashboard**  
+  - My Properties (private)  
+  - My Ratings (private)  
+  - Add Property (private)  
+
+---
+
+## 🧩 Implemented Pages
+
+| Page Name | Description |
+|-----------|-------------|
+| **Home** | Includes slider, featured properties, and other static sections. |
+| **All Properties** | Lists all properties with sort and search functionality. |
+| **Add Property** | Private route for users to add new listings. |
+| **My Properties** | Shows logged-in user's properties with edit/delete options. |
+| **Update Property** | Edit property info in a form pre-filled with existing data. |
+| **Property Details** | Shows full property info and reviews section (private). |
+| **My Ratings** | Displays user-submitted reviews. |
+| **Login / Register** | Email/password & Google authentication using Firebase. |
+| **404 Not Found** | Custom-designed page for invalid routes. |
+
+---
+
+## ⚙️ Technology Stack
+
+**Frontend:**  
+- React.js  
+- React Router  
+- Firebase Authentication  
+- Tailwind CSS  
+- SweetAlert2 / React Hot Toast  
+- Context API (for Auth Management)
+
+**Backend:**  
+- Node.js  
+- Express.js  
+- MongoDB (Atlas)  
+- Firebase Token Verification for API protection
+
+**Hosting:**  
+- Client: Firebase Hosting  
+- Server: Vercel  
+
+---
+
+## 🔧 Notable Functionalities
+
+- ✅ Password validation (uppercase, lowercase, min length 6)  
+- ✅ Conditional navbar based on user login state  
+- ✅ Protected routes for Add, My Properties, My Ratings, and Details pages  
+- ✅ SweetAlert used for all success, error, and confirmation messages  
+- ✅ Loading spinner for data fetching  
+- ✅ Responsive design for mobile, tablet, and desktop  
+- ✅ Sorting implemented on backend (price/date based)  
+
+---
+
+## ⚡ Implementation Notes
+
+- Instead of **JWT Authorization**, Firebase token verification was used to secure private routes and API endpoints.  
+- Did **not use optional libraries**:
+  - ❌ Tanstack Query (data fetched via Axios + useEffect)
+  - ❌ Shadcn
+  - ❌ Date-fns  
+- All other mandatory and challenge tasks were fully implemented.
+
+---
+
+## 🚀 How to Run Locally
+
+### 🧱 Client Setup
+```bash
+git clone https://github.com/MD-ELIUS/home-nest-client.git
+cd homenest-client
+npm install
+npm run dev
