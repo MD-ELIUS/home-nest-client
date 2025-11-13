@@ -7,6 +7,7 @@ import "@smastrom/react-rating/style.css";
 import LoadingData from "../Loader/LoadingData";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
+import demoImg from ".././assets/avatar.png";
 
 const MyRatings = () => {
   const { user } = useContext(AuthContext);
@@ -31,7 +32,7 @@ const MyRatings = () => {
 
   useEffect(() => {
     setLoadingProperties(true);
-    fetch("http://localhost:5205/properties")
+    fetch("https://home-nest-api-server-chi.vercel.app/properties")
       .then((res) => res.json())
       .then((data) => {
         setProperties(data);
@@ -39,7 +40,7 @@ const MyRatings = () => {
       });
   }, []);
 
- // ✅ Delete Review Function
+
   const handleDeleteReview = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -91,7 +92,7 @@ const MyRatings = () => {
           {reviews.map((rev, idx) => {
             const property = getPropertyInfo(rev.propertyId);
 
-            if (!property) return null; // safeguard
+            if (!property) return null; 
 
             return (
               <div
@@ -133,7 +134,7 @@ const MyRatings = () => {
 
                   <div className="flex items-center gap-3 pt-3 border-t border-base-300">
                     <img
-                      src={rev.reviewerImage}
+                      src={rev.reviewerImage ? rev.reviewerImage : demoImg}
                       alt={rev.reviewerName}
                       className="w-10 h-10 rounded-full object-cover border-2 border-secondary"
                     />

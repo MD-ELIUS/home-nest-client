@@ -35,11 +35,11 @@ const Login = () => {
                     name: user.displayName,
                     email: user.email,
                     photoUrl: user.photoURL,
-                    createdAt: new Date().toISOString() // adds current date/time
+                    createdAt: new Date().toISOString() 
                 }
 
-                     // create user in the database
-                fetch('http://localhost:5205/users', {
+                     
+                fetch('https://home-nest-api-server-chi.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -85,10 +85,7 @@ const Login = () => {
       <h2 className="text-center text-2xl  md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary">
            Login to <span className="text-primary">Your Account</span>
         </h2>
-        {/* <h2 className="text-2xl font-bold text-center mb-6 border-b border-base-300 pb-4">
-          Login to Your Account
-        </h2> */}
-
+      
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
           <div>

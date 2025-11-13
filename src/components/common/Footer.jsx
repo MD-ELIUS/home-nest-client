@@ -49,7 +49,7 @@ export default function Footer() {
           { user &&
               <li><Link to="/add-property"  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}  className="hover:text-primary">Add Property</Link></li>
           }
-            <li><Link to="/terms"  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}  className="hover:text-primary">Terms & Conditions</Link></li>
+            <li><Link  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}  className="hover:text-primary">Terms & Conditions</Link></li>
           </ul>
         </div>
 

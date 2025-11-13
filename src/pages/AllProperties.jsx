@@ -6,7 +6,7 @@ import usePageTitle from "../hooks/usePageTitle";
 
 const AllProperties = () => {
   const [properties, setProperties] = useState([]);
-  const [allProperties, setAllProperties] = useState([]); // ✅ মূল data রাখার জন্য
+  const [allProperties, setAllProperties] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [sortOption, setSortOption] = useState("dateDesc");
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,17 +35,17 @@ const AllProperties = () => {
   useEffect(() => {
     setLoading(true);
     setIsSorting(true);
-    fetch(`http://localhost:5205/properties?sort=${sortOption}`)
+    fetch(`https://home-nest-api-server-chi.vercel.app/properties?sort=${sortOption}`)
       .then((res) => res.json())
       .then((data) => {
-        setAllProperties(data); // ✅ মূল ডেটা এখানে রাখা হলো
+        setAllProperties(data); 
         setProperties(data);
         setLoading(false);
         setIsSorting(false);
       });
   }, [sortOption]);
+  
 
-  // 🟢 Show loader if sorting/fetching
   return (
 
 

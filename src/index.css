@@ -6,43 +6,43 @@
   name: "light";
   default: true;
 
-  --color-primary: #5BA600;       /* Your primary */
-  --color-secondary: #0D1741;     /* Your secondary */
-  --color-accent: #FFC700;        /* Highlight color */
-  --color-neutral: #F3F3F3;       /* For background/base */
-  --color-base-100: #FFFFFF;      /* Card/background light */
-  --color-base-200: #FFFFFF;      /* Slightly darker base */
-  --color-base-300: #E7E7E7;      /* For elements */
-  --color-info: #3ABFF8;          /* Info messages */
-  --color-success: #36D399;       /* Success messages */
-  --color-warning: #FBBD23;       /* Warning messages */
-  --color-error: #F87272;         /* Error messages */
+  --color-primary: #5BA600;      
+  --color-secondary: #0D1741;     
+  --color-accent: #FFC700;       
+  --color-neutral: #F3F3F3;     
+  --color-base-100: #FFFFFF;     
+  --color-base-200: #FFFFFF;      
+  --color-base-300: #E7E7E7;    
+  --color-info: #3ABFF8;          
+  --color-success: #36D399;       
+  --color-warning: #FBBD23;      
+  --color-error: #F87272;         
 }
 
 /* ---------- Dark Theme ---------- */
 @plugin "daisyui/theme" {
   name: "dark";
 
-  --color-primary: #5BA600;       /* Same as light */
-  --color-secondary: #A1B6FF;     /* Lighter version for dark */
-  --color-accent: #FFD700;        /* Highlight */
-  --color-neutral: #1F1F1F;       /* Dark background */
-  --color-base-100: #111111;      /* Card/background dark */
-  --color-base-200: #1A1A1A;      /* Slightly lighter */
-  --color-base-300: #2A2A2A;      /* Elements */
-  --color-info: #66D9FF;          /* Info messages */
-  --color-success: #36D399;       /* Success same */
-  --color-warning: #FBBF24;       /* Warning */
-  --color-error: #F87171;         /* Error */
+  --color-primary: #5BA600;       
+  --color-secondary: #A1B6FF;    
+  --color-accent: #FFD700;        
+  --color-neutral: #1F1F1F;       
+  --color-base-100: #111111;     
+  --color-base-200: #1A1A1A;      
+  --color-base-300: #2A2A2A;      
+  --color-info: #66D9FF;          
+  --color-success: #36D399;       
+  --color-warning: #FBBF24;       
+  --color-error: #F87171;         
 }
 
 [data-theme="dark"] .nav {
-  background-color: #252525;       /* slightly lighter than base-200 for separation */
-  color: var(--color-primary);     /* keeps your primary text */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* subtle shadow for depth */
-  backdrop-filter: blur(8px);     /* optional, gives glassy effect */
-  border-bottom: 1px solid #333;  /* subtle border for separation */
-  z-index: 50;                     /* ensure navbar is on top */
+  background-color: #252525;       
+  color: var(--color-primary);     
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); 
+  backdrop-filter: blur(8px);     
+  border-bottom: 1px solid #333;  
+  z-index: 50;                   
 }
 
 .activeClass a.active {
@@ -54,12 +54,12 @@
 }
 
 [data-theme="dark"] .foot {
-  background-color: #252525;       /* slightly lighter than base-200 for separation */
-  color: var(--color-primary);     /* keeps your primary text */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* subtle shadow for depth */
-  backdrop-filter: blur(8px);     /* optional, gives glassy effect */
-  border-bottom: 1px solid #333;  /* subtle border for separation */
-                      /* ensure navbar is on top */
+  background-color: #252525;       
+  color: var(--color-primary);   
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); 
+  backdrop-filter: blur(8px);     
+  border-bottom: 1px solid #333;  
+                  
 }
 
 

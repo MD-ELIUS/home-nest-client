@@ -36,7 +36,7 @@ const slides = [
 const Banner = () => {
   const [isDark, setIsDark] = useState(false);
 
-  // Detect theme
+
   useEffect(() => {
     const observer = new MutationObserver(() => {
       setIsDark(document.documentElement.getAttribute("data-theme") === "dark");
@@ -46,14 +46,14 @@ const Banner = () => {
     return () => observer.disconnect();
   }, []);
 
-  // ✅ Zoom + text animation trigger
+
  const handleSlideChange = (swiper) => {
   const activeSlide = swiper
     ? swiper.slides[swiper.activeIndex]
     : document.querySelector(".swiper-slide-active");
   if (!activeSlide) return;
 
-  // ✅ remove zoom-animate from all slides first
+
   swiper?.slides.forEach((slide) => {
     const bg = slide.querySelector(".zoom-bg");
     if (bg) {
@@ -61,14 +61,14 @@ const Banner = () => {
     }
   });
 
-  // ✅ add zoom-animate to active slide
+
   const bgDiv = activeSlide.querySelector(".zoom-bg");
   if (bgDiv) {
-    void bgDiv.offsetWidth; // reset reflow
+    void bgDiv.offsetWidth;
     bgDiv.classList.add("zoom-animate");
   }
 
-  // retrigger text animations
+
   const retrigger = (selector, classes) => {
     const el = activeSlide.querySelector(selector);
     if (!el) return;
@@ -95,13 +95,13 @@ const Banner = () => {
   }}
   loop
   onInit={(swiper) => {
-    // ✅ first slide zoom after DOM ready
+    
     setTimeout(() => handleSlideChange(swiper), 50);
   }}
   onSlideChangeTransitionStart={(swiper) => {
     handleSlideChange(swiper);
 
-    // ✅ if loop restarted (swiper.activeIndex === 0 after last slide)
+  
     if (swiper.realIndex === 0) {
       const firstSlide = swiper.slides[swiper.activeIndex];
       const bgDiv = firstSlide.querySelector(".zoom-bg");
@@ -118,20 +118,20 @@ const Banner = () => {
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
             <div className="relative flex items-center justify-center h-full overflow-hidden">
-              {/* ✅ Background image with zoom class */}
+       
               <div
                 className="absolute inset-0 bg-cover bg-center zoom-bg"
                 style={{ backgroundImage: `url(${slide.image})` }}
               ></div>
 
-              {/* Theme overlay */}
+       
               <div
                 className={`absolute inset-0 transition-colors duration-1000 ${
                   isDark ? "bg-black/70" : "bg-secondary/70"
                 }`}
               ></div>
 
-              {/* Slide text */}
+    
               <div className="relative text-center text-white px-3 sm:px-4 ">
                 <h2 className="text-xs sm:text-base md:text-lg lg:text-2xl font-light mb-2 sm:mb-3 animate__animated animate__fadeInDown">
                   {slide.subtitle}
@@ -157,7 +157,7 @@ const Banner = () => {
         <div className="swiper-pagination absolute bottom-2 left-1/2 -translate-x-1/2 z-20"></div>
       </Swiper>
 
-      {/* ✅ Zoom effect CSS */}
+
       <style jsx>{`
         .zoom-bg {
           transform: scale(1);

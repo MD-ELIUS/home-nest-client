@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router";
 import LoadingData from "../Loader/LoadingData";
 import usePageTitle from "../hooks/usePageTitle";
 
+
 const MySwal = withReactContent(Swal);
 
 const MyProperties = () => {
@@ -24,7 +25,7 @@ const MyProperties = () => {
   useEffect(() => {
     if (user?.email) {
       setLoading(true);
-      fetch(`http://localhost:5205/properties?userEmail=${user.email}`)
+      fetch(`https://home-nest-api-server-chi.vercel.app/properties?userEmail=${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           setLoading(false);
@@ -37,7 +38,7 @@ const MyProperties = () => {
     }
   }, [user?.email]);
 
-  // Delete Property
+
   const handleDelete = (id) => {
     MySwal.fire({
       title: "Are you sure?",
@@ -62,13 +63,13 @@ const MyProperties = () => {
     });
   };
 
-  // Open Update Modal
+
   const handleUpdateClick = (property) => {
     setSelectedProperty(property);
     setIsModalOpen(true);
   };
 
-  // Update Submit (Same structure as MyProducts)
+
   const handleUpdateSubmit = async (event) => {
     event.preventDefault();
     
@@ -149,7 +150,7 @@ const MyProperties = () => {
                   className="bg-base-200  border border-base-300 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden animate-left-to-center"
                 >
                   <img
-                    src={property.imageUrl}
+                    src={property.imageUrl  }
                     alt={property.propertyName}
                     className="w-full h-44 sm:h-48 object-cover"
                   />
@@ -209,7 +210,7 @@ const MyProperties = () => {
         </>
       )}
 
-      {/* ✅ Update Modal (Copied & Styled Like MyProducts) */}
+      
       {isModalOpen && selectedProperty && (
         <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-transparent backdrop-blur-sm py-10">
           <div className="bg-base-100 rounded-2xl shadow-lg w-full max-w-2xl p-8 border border-base-100 relative my-10">
@@ -334,13 +335,13 @@ const MyProperties = () => {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="border border-primary text-primary font-medium py-2 px-5 rounded-lg hover:bg-primary/10 transition"
+                  className=" font-medium btn-error btn btn-outline py-2 px-5  transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-primary text-white font-semibold py-2 px-5 rounded-lg hover:opacity-90 transition"
+                  className="btn btn-success btn-outline font-semibold py-2 px-5   transition"
                 >
                   Update Property
                 </button>

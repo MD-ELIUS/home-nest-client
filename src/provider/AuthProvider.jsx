@@ -56,7 +56,7 @@ const AuthProvider = ({ children }) => {
             setLoading(false);
         });
 
-        return () => unSubscribe(); // ✅ Proper cleanup
+        return () => unSubscribe(); 
     }, []);
 
     const authInfo = {

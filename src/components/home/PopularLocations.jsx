@@ -25,11 +25,7 @@ export default function PopularLocations() {
       properties: 30,
       icon: <MapPin className="w-10 h-10 text-primary" />,
     },
-    {
-      name: "Rajshahi",
-      properties: 25,
-      icon: <MapPin className="w-10 h-10 text-primary" />,
-    },
+    
   ];
 
   return (
@@ -56,7 +52,7 @@ export default function PopularLocations() {
         </motion.p>
 
         {/* Locations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 sm:gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {locations.map((loc, i) => (
             <motion.div
               key={i}

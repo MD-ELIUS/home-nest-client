@@ -42,7 +42,7 @@ const newProperty = {
     created_at: new Date().toISOString()
 }
 
-     axiosSecure.post("http://localhost:5205/properties", newProperty)
+     axiosSecure.post("https://home-nest-api-server-chi.vercel.app/properties", newProperty)
        .then(data => {
         console.log('successfull data', data.data)
         if(data.data.insertedId) {

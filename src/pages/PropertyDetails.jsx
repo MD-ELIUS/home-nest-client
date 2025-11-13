@@ -9,6 +9,7 @@ import userImg from ".././assets/avatar.png";
 import { FaMoneyBillWave, FaMapMarkerAlt, FaTags, FaCalendarAlt } from "react-icons/fa";
 import LoadingData from '../Loader/LoadingData';
 import Swal from 'sweetalert2';
+import demoImg from ".././assets/avatar.png";
 
 const PropertyDetails = () => {
   const { id } = useParams();
@@ -42,7 +43,6 @@ usePageTitle(property ? `${property.propertyName} | HomeNest Real Estate` : "Pro
 }, [id, user, axiosSecure]);
 
 
-// after reviews state update
 useEffect(() => {
   if (id && user?.email && user?.accessToken) {
     axiosSecure
@@ -52,7 +52,7 @@ useEffect(() => {
   }
 }, [id, user, axiosSecure]);
 
-// check if current user already reviewed
+
 const userHasReviewed = reviews.some(
   (rev) => rev.reviewerEmail === user?.email
 );
@@ -289,7 +289,7 @@ const userHasReviewed = reviews.some(
       >
          <div className='flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4'>
              <img
-          src={rev.reviewerImage}
+          src={rev.reviewerImage ? rev.reviewerImage : demoImg}
           alt={rev.reviewerName}
           className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
         />
@@ -298,12 +298,12 @@ const userHasReviewed = reviews.some(
             <h4 className="font-semibold text-secondary">{rev.reviewerName}</h4>
           </div>
           <Rating style={{ maxWidth: 120 }} readOnly value={rev.rating} />
-          <p className="text-secondary/80 mt-1">{rev.reviewText}</p>
+          <p className="opacity-80 text-sm mt-1">{rev.reviewText}</p>
         </div>
          </div>
 
          <div>
-              <span className="text-sm flex sm:flex-col flex-row justify-between items-center gap-2 text-secondary/60 mt-1 sm:mt-0">
+              <span className="text-sm flex sm:flex-col flex-row justify-between items-center gap-2 text-secondary/60 mt-1 min-w-[150px] sm:mt-0">
                 {new Date(rev.reviewDate).toLocaleDateString("en-GB", {
                         day: "2-digit",
                         month: "long",
@@ -332,113 +332,3 @@ const userHasReviewed = reviews.some(
 };
 
 export default PropertyDetails;
-
-
-//    {/* Posted By */}
-//           <div className="xl:flex hidden items-center gap-3 mt-6 bg-base-200 rounded-xl p-3 shadow-sm">
-//             <img
-//               src={userImage ? userImage : userImg}
-//               alt="Posted By"
-//               className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-secondary object-cover"
-//             />
-//             <div>
-//               <p className="font-semibold text-secondary text-base sm:text-lg">
-//                 {userName || "Unknown User"}
-//               </p>
-//               <p className="text-sm text-secondary/70">
-//                 {userEmail || "No email available"}
-//               </p>
-//             </div>
-//           </div>
-
-
-//  {/* Info Grid */}
-//           <div className="xl:grid hidden  grid-cols-1 gap-2 mt-4">
-//             <div className='flex flex-col gap-2 md:flex-row justify-between'>
-//               <div className='flex gap-1 items-center'>
-//                 <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
-//                   Price:
-//                 </p>
-//                 <span className="font-medium">${price}</span>
-//               </div>
-
-//               <div className='flex gap-1 items-center'>
-//                 <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
-//                   Category:
-//                 </p>
-//                 <span className="font-medium">{category}</span>
-//               </div>
-//             </div>
-
-//             <div className='flex flex-col gap-2 md:flex-row justify-between'>
-//               <div className='flex gap-1 items-center'>
-//                 <FaMapMarkerAlt className="text-lg text-secondary/90 sm:text-xl" />
-//                 <p className="font-medium text-base flex items-center gap-1">
-//                   {location}
-//                 </p>
-//               </div>
-
-//               <div className='flex gap-1 items-center'>
-//                 <FaCalendarAlt className="text-secondary/90 sm:text-xl" />
-//                 <p className="font-medium text-base flex items-center gap-2">
-//                   {new Date(created_at).toLocaleDateString("en-GB", {
-//                     day: "2-digit",
-//                     month: "long",
-//                     year: "numeric",
-//                   })}
-//                 </p>
-//               </div>
-//             </div>
-//           </div>
-
-
-
-// {/* Info Grid */}
-//           <div className="grid xl:hidden  grid-cols-1 gap-2 mt-4">
-//             <div className='flex flex-col gap-2 md:flex-row justify-between'>
-//               <div className='flex gap-1 items-center'>
-//                 <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
-//                   Price:
-//                 </p>
-//                 <span className="font-medium">${price}</span>
-//               </div>
-
-//               <div className='flex gap-1 items-center'>
-//                 <p className="font-medium text-base text-secondary/90 flex items-center gap-2">
-//                   Category:
-//                 </p>
-//                 <span className="font-medium">{category}</span>
-//               </div>
-//             </div>
-
-//             <div className='flex flex-col gap-2 md:flex-row justify-between'>
-//               <div className='flex gap-1 items-center'>
-//                 <FaMapMarkerAlt className="text-lg text-secondary/90 sm:text-xl" />
-//                 <p className="font-medium text-base flex items-center gap-1">
-//                   {location}
-//                 </p>
-//               </div>
-
-//               <div className='flex gap-1 items-center'>
-//                 <FaCalendarAlt className="text-secondary/90 sm:text-xl" />
-//                 <p className="font-medium text-base flex items-center gap-2">
-//                   {new Date(created_at).toLocaleDateString("en-GB", {
-//                     day: "2-digit",
-//                     month: "long",
-//                     year: "numeric",
-//                   })}
-//                 </p>
-//               </div>
-//             </div>
-//           </div>
-
-
-
-//  <span className="text-sm flex flex-col text-secondary/60 mt-1 sm:mt-0">
-//               {new Date(rev.reviewDate).toLocaleDateString()}
-//                {
-//                 user.email === rev.reviewerEmail && <button className='btn btn-error btn-outline'>
-//                     Remove
-//                 </button>
-//               }
-//             </span>

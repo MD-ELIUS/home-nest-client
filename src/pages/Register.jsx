@@ -30,11 +30,11 @@ const Register = () => {
                     name: user.displayName,
                     email: user.email,
                     photoUrl: user.photoURL,
-                    createdAt: new Date().toISOString() // adds current date/time
+                    createdAt: new Date().toISOString() 
                 }
 
-                     // create user in the database
-                fetch('http://localhost:5205/users', {
+                     
+                fetch('https://home-nest-api-server-chi.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -104,11 +104,11 @@ const Register = () => {
                     name: name,
                     email: user.email,
                     photoUrl: photoURL,
-                    createdAt: new Date().toISOString() // adds current date/time
+                    createdAt: new Date().toISOString() 
                 }
 
-                     // create user in the database
-                fetch('http://localhost:5205/users', {
+                    
+                fetch('https://home-nest-api-server-chi.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

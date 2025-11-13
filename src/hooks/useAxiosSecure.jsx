@@ -4,7 +4,7 @@ import { AuthContext } from "../provider/AuthContext";
 import { useNavigate } from "react-router";
 
 const instance = axios.create({
-    baseURL: 'http://localhost:5205'
+    baseURL: 'https://home-nest-api-server-chi.vercel.app'
 })
 
 const useAxiosSecure = () => {

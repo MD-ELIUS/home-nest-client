@@ -4,13 +4,13 @@ import { motion } from "framer-motion";
 
 export default function ErrorPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-base-100 text-secondary text-center p-6 animate-fade-in-center">
-      {/* Animated Icon */}
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-base-100 text-secondary text-center p-6 overflow-hidden">
+      {/* Main Content */}
       <motion.div
         initial={{ scale: 0.6, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="flex flex-col items-center justify-center space-y-4"
+        className="flex flex-col items-center justify-center space-y-4 relative z-10"
       >
         <div className="bg-primary/10 p-8 rounded-full shadow-md">
           <AlertTriangle className="w-16 h-16 text-primary animate-pulse" />
@@ -35,7 +35,7 @@ export default function ErrorPage() {
         initial={{ y: 40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="mt-10 flex flex-wrap gap-4 justify-center"
+        className="mt-10 flex flex-wrap gap-4 justify-center relative z-10"
       >
         <Link
           to="/"
@@ -52,17 +52,7 @@ export default function ErrorPage() {
         </Link>
       </motion.div>
 
-      {/* Background Accent */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.08 }}
-        transition={{ duration: 1 }}
-        className="absolute inset-0 pointer-events-none select-none"
-      >
-        <h1 className="text-[20rem] sm:text-[30rem] font-extrabold text-secondary/10 tracking-widest leading-none text-center absolute inset-0 flex items-center justify-center">
-          HomeNest
-        </h1>
-      </motion.div>
+    
     </div>
   );
 }
