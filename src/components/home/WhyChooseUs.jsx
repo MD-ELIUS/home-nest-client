@@ -32,7 +32,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="pb-6 md:pb-8 lg:pb-10 bg-base-100">
+    <section className="pb-8 md:pb-8 lg:pb-10 bg-base-100">
       <div className="w-11/12 mx-auto text-center">
         {/* Animated Section Heading */}
         <motion.h2
@@ -61,7 +61,7 @@ export default function WhyChooseUs() {
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.3, duration: 1 }}
+              transition={{ delay: i * 0.2, duration: 0.8 }}
               className="card bg-base-200 shadow-md hover:shadow-xl transition-transform duration-500 hover:-translate-y-2 border border-base-300 rounded-2xl p-6 flex flex-col items-center space-y-4"
             >
               {item.icon}

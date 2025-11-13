@@ -127,7 +127,7 @@ const MyProperties = () => {
   };
 
   return (
-    <div className="py-4 sm:py-6 md:py-8 lg:py-10 space-y-6 bg-base-100">
+    <div className="py-8 lg:py-10 space-y-6 bg-base-100">
       {loading ? (
         <LoadingData />
       ) : (

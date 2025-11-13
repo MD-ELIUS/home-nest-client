@@ -6,7 +6,7 @@ import FeaturedProperties from '../components/home/FeaturedProperties';
 import usePageTitle from '../hooks/usePageTitle';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import ExpertGuidance from '../components/home/ExpertGuidance';
-import FeaturedLocations from '../components/home/FeaturedLocations';
+import PopularLocations from '../components/home/PopularLocations';
 
 const Home = () => {
 
@@ -20,7 +20,7 @@ const Home = () => {
             <FeaturedProperties></FeaturedProperties>
             <WhyChooseUs></WhyChooseUs>
             <ExpertGuidance></ExpertGuidance>
-            {/* <FeaturedLocations></FeaturedLocations> */}
+            <PopularLocations></PopularLocations>
         </div>
     
         

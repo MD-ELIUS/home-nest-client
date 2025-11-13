@@ -37,7 +37,7 @@ const experts = [
 
 export default function ExpertGuidance() {
   return (
-    <section className="pb-6 md:pb-8 lg:pb-10   w-11/12 mx-auto ">
+    <section className="pb-8 md:pb-8 lg:pb-10   w-11/12 mx-auto ">
       <motion.h2
         initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -74,7 +74,7 @@ export default function ExpertGuidance() {
             key={ex.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-           transition={{ delay: i * 0.3, duration: 1 }}
+           transition={{ delay: i * 0.2, duration: 0.8 }}
             className="bg-base-200  border border-base-300  shadow-md hover:shadow-xl transition p-6 rounded-2xl flex flex-col items-center text-center"
           >
             <div className="h-25 w-25 mb-3 rounded-full overflow-hidden border-2 border-secondary">
