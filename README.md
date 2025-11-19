@@ -110,6 +110,58 @@ Built using the **MERN stack (MongoDB, Express, React, Node.js)** and **Firebase
 
 ---
 
+## 📦 Project Dependencies
+
+Here are the main dependencies used in this project:
+
+- **@smastrom/react-rating** — Rating component for user reviews  
+- **@tailwindcss/vite** — Tailwind integration with Vite  
+- **animate.css** — Prebuilt CSS animations  
+- **axios** — HTTP client for API requests  
+- **firebase** — Authentication & hosting services  
+- **lucide-react** — Icon library  
+- **motion** — Animation library  
+- **react** — Core React library  
+- **react-dom** — DOM renderer for React  
+- **react-helmet** — Manage document head / titles  
+- **react-icons** — Popular icon pack  
+- **react-router** — Routing system  
+- **react-toastify** — Toast notifications  
+- **shadcn-ui** — UI component library  
+- **styled-components** — CSS-in-JS styling  
+- **sweetalert2** — Beautiful alert dialogs  
+- **sweetalert2-react-content** — React wrapper for SweetAlert2  
+- **swiper** — Modern slider/carousel library  
+- **tailwindcss** — Utility-first CSS framework
+
+
+```json
+{
+  "dependencies": {
+    "@smastrom/react-rating": "^1.5.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "animate.css": "^4.1.1",
+    "axios": "^1.13.2",
+    "firebase": "^12.5.0",
+    "lucide-react": "^0.553.0",
+    "motion": "^12.23.24",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^5.5.0",
+    "react-router": "^7.9.5",
+    "react-toastify": "^11.0.5",
+    "shadcn-ui": "^0.9.5",
+    "styled-components": "^6.1.19",
+    "sweetalert2": "^11.26.3",
+    "sweetalert2-react-content": "^5.1.0",
+    "swiper": "^12.0.3",
+    "tailwindcss": "^4.1.17"
+  }
+}
+```
+---
+
 ## 🚀 How to Run Locally
 
 ### 🧱 Client Setup
