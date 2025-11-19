@@ -170,3 +170,20 @@ git clone https://github.com/MD-ELIUS/home-nest-client.git
 cd homenest-client
 npm install
 npm run dev
+```
+
+### 🔐 Configure Environment Variables
+
+Create a `.env.local` file in the root folder of the project.  
+Add your Firebase configuration as environment variables.  
+
+**Example structure:**
+
+```env
+VITE_apiKey=YOUR_FIREBASE_API_KEY
+VITE_authDomain=YOUR_FIREBASE_AUTH_DOMAIN
+VITE_projectId=YOUR_FIREBASE_PROJECT_ID
+VITE_storageBucket=YOUR_FIREBASE_STORAGE_BUCKET
+VITE_messagingSenderId=YOUR_FIREBASE_MESSAGING_SENDER_ID
+VITE_appId=YOUR_FIREBASE_APP_ID
+
