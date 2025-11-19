@@ -65,6 +65,21 @@ Built using the **MERN stack (MongoDB, Express, React, Node.js)** and **Firebase
 
 ---
 
+## 🖼️ Screenshots
+
+Here are some screenshots of the **HomeNest – Real Estate Listing Portal** in action:
+
+| Home Page | All Properties Page |
+|:---------:|:-----------------:|
+| ![Home Page Screenshot](https://i.ibb.co.com/jvCk21xP/homenest-homepage.png) | ![All Properties Screenshot](https://i.ibb.co.com/CCG7X7P/homenest-all-properties.png) |
+
+| Add Property Page | Property Details Page |
+|:----------------:|:------------------:|
+| ![My Property Screenshot](https://i.ibb.co.com/LzJmfpk9/homenest-my-properties.png) | ![Property Details Screenshot](https://i.ibb.co.com/dJHQSWkM/homenest-property-details.png) |
+
+
+
+
 ## ⚙️ Technology Stack
 
 **Frontend:**  
