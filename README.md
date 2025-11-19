@@ -73,9 +73,9 @@ Here are some screenshots of the **HomeNest – Real Estate Listing Portal** in 
 |:---------:|:-----------------:|
 | ![Home Page Screenshot](https://i.ibb.co.com/jvCk21xP/homenest-homepage.png) | ![All Properties Screenshot](https://i.ibb.co.com/CCG7X7P/homenest-all-properties.png) |
 
-| Add Property Page | Property Details Page |
+| My Property Page | Property Details Page |
 |:----------------:|:------------------:|
-| ![My Property Screenshot](https://i.ibb.co.com/LzJmfpk9/homenest-my-properties.png) | ![Property Details Screenshot](https://i.ibb.co.com/dJHQSWkM/homenest-property-details.png) |
+| ![My Property Screenshot](https://i.ibb.co.com/R4hpgWqk/homenest-my-properties.png) | ![Property Details Screenshot](https://i.ibb.co.com/dJHQSWkM/homenest-property-details.png) |
 
 
 
