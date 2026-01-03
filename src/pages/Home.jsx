@@ -7,6 +7,7 @@ import usePageTitle from '../hooks/usePageTitle';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import ExpertGuidance from '../components/home/ExpertGuidance';
 import PopularLocations from '../components/home/PopularLocations';
+import ClientTestimonials from '../components/home/ClientTestimonials';
 
 const Home = () => {
 
@@ -21,6 +22,7 @@ const Home = () => {
             <WhyChooseUs></WhyChooseUs>
             <ExpertGuidance></ExpertGuidance>
             <PopularLocations></PopularLocations>
+            <ClientTestimonials></ClientTestimonials>
         </div>
     
         
