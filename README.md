@@ -1,10 +1,8 @@
-# 🏡 HomeNest – A Real Estate Listing Portal
+## 🏡 HomeNest – A Real Estate Listing Portal
 
-### 📁 Assignment Category: 0013  
-
-🌐 Live Site URL: [https://home-nest-5d146.web.app/]
-💻 Client Repository: [https://github.com/MD-ELIUS/home-nest-client]
-🖥️ Server Repository: [https://github.com/MD-ELIUS/home-nest-server] 
+🌐 **Live Site URL:** [https://home-nest-5d146.web.app/]  
+💻 **Client Repository:** [HomeNest Client](https://github.com/MD-ELIUS/home-nest-client)  
+🖥️ **Server Repository:** [HomeNest Server](https://github.com/MD-ELIUS/home-nest-server)
 
 ---
 
@@ -65,6 +63,21 @@ Built using the **MERN stack (MongoDB, Express, React, Node.js)** and **Firebase
 
 ---
 
+## 🖼️ Screenshots
+
+Here are some screenshots of the **HomeNest – Real Estate Listing Portal** in action:
+
+| Home Page | All Properties Page |
+|:---------:|:-----------------:|
+| ![Home Page Screenshot](https://i.ibb.co.com/jvCk21xP/homenest-homepage.png) | ![All Properties Screenshot](https://i.ibb.co.com/CCG7X7P/homenest-all-properties.png) |
+
+| My Property Page | Property Details Page |
+|:----------------:|:------------------:|
+| ![My Property Screenshot](https://i.ibb.co.com/R4hpgWqk/homenest-my-properties.png) | ![Property Details Screenshot](https://i.ibb.co.com/dJHQSWkM/homenest-property-details.png) |
+
+
+
+
 ## ⚙️ Technology Stack
 
 **Frontend:**  
@@ -110,6 +123,58 @@ Built using the **MERN stack (MongoDB, Express, React, Node.js)** and **Firebase
 
 ---
 
+## 📦 Project Dependencies
+
+Here are the main dependencies used in this project:
+
+- **@smastrom/react-rating** — Rating component for user reviews  
+- **@tailwindcss/vite** — Tailwind integration with Vite  
+- **animate.css** — Prebuilt CSS animations  
+- **axios** — HTTP client for API requests  
+- **firebase** — Authentication & hosting services  
+- **lucide-react** — Icon library  
+- **motion** — Animation library  
+- **react** — Core React library  
+- **react-dom** — DOM renderer for React  
+- **react-helmet** — Manage document head / titles  
+- **react-icons** — Popular icon pack  
+- **react-router** — Routing system  
+- **react-toastify** — Toast notifications  
+- **shadcn-ui** — UI component library  
+- **styled-components** — CSS-in-JS styling  
+- **sweetalert2** — Beautiful alert dialogs  
+- **sweetalert2-react-content** — React wrapper for SweetAlert2  
+- **swiper** — Modern slider/carousel library  
+- **tailwindcss** — Utility-first CSS framework
+
+
+```json
+{
+  "dependencies": {
+    "@smastrom/react-rating": "^1.5.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "animate.css": "^4.1.1",
+    "axios": "^1.13.2",
+    "firebase": "^12.5.0",
+    "lucide-react": "^0.553.0",
+    "motion": "^12.23.24",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^5.5.0",
+    "react-router": "^7.9.5",
+    "react-toastify": "^11.0.5",
+    "shadcn-ui": "^0.9.5",
+    "styled-components": "^6.1.19",
+    "sweetalert2": "^11.26.3",
+    "sweetalert2-react-content": "^5.1.0",
+    "swiper": "^12.0.3",
+    "tailwindcss": "^4.1.17"
+  }
+}
+```
+---
+
 ## 🚀 How to Run Locally
 
 ### 🧱 Client Setup
@@ -118,3 +183,20 @@ git clone https://github.com/MD-ELIUS/home-nest-client.git
 cd homenest-client
 npm install
 npm run dev
+```
+
+### 🔐 Configure Environment Variables
+
+Create a `.env.local` file in the root folder of the project.  
+Add your Firebase configuration as environment variables.  
+
+**Example structure:**
+
+```env
+VITE_apiKey=YOUR_FIREBASE_API_KEY
+VITE_authDomain=YOUR_FIREBASE_AUTH_DOMAIN
+VITE_projectId=YOUR_FIREBASE_PROJECT_ID
+VITE_storageBucket=YOUR_FIREBASE_STORAGE_BUCKET
+VITE_messagingSenderId=YOUR_FIREBASE_MESSAGING_SENDER_ID
+VITE_appId=YOUR_FIREBASE_APP_ID
+
