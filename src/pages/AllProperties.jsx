@@ -1,114 +1,149 @@
 import React, { useEffect, useState } from "react";
 import PropertyCard from "../components/common/PropertyCard";
-import LoadingHome from "../Loader/LoadingHome";
 import LoadingData from "../Loader/LoadingData";
 import usePageTitle from "../hooks/usePageTitle";
 
 const AllProperties = () => {
   const [properties, setProperties] = useState([]);
-  const [allProperties, setAllProperties] = useState([]); 
   const [loading, setLoading] = useState(true);
+
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
   const [sortOption, setSortOption] = useState("dateDesc");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isSorting, setIsSorting] = useState(true);
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   usePageTitle("All Properties | HomeNest Real Estate");
 
-
-  const handleSearchTerm = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    setLoading(true);
-
-    setTimeout(() => {
-      const term = value.trim().toLowerCase();
-      const filtered = term
-        ? allProperties.filter((property) =>
-            property.propertyName.toLowerCase().includes(term)
-          )
-        : allProperties;
-      setProperties(filtered);
-      setLoading(false);
-    }, 1000);
-  };
-
+  // 🔹 Fetch data from backend
   useEffect(() => {
     setLoading(true);
-    setIsSorting(true);
-    fetch(`https://home-nest-api-server-chi.vercel.app/properties?sort=${sortOption}`)
+
+    const url = new URL(
+      "https://home-nest-api-server-chi.vercel.app/properties"
+    );
+
+    url.searchParams.append("page", page);
+    url.searchParams.append("limit", 12);
+    url.searchParams.append("sort", sortOption);
+
+    if (search) url.searchParams.append("search", search);
+    if (category) url.searchParams.append("category", category);
+
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        setAllProperties(data); 
-        setProperties(data);
+        setProperties(data.data);
+        setTotalPages(data.totalPages);
         setLoading(false);
-        setIsSorting(false);
-      });
-  }, [sortOption]);
-  
+      })
+      .catch(() => setLoading(false));
+  }, [search, category, sortOption, page]);
 
   return (
-
-
-       <section className=" min-h-screen py-8 lg:py-10">
+    <section className="min-h-screen py-8 lg:py-10">
       <div className="w-11/12 mx-auto">
-        <h2 className="text-center text-2xl  md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary">
-          All <span className="text-primary">Properties ({properties.length})</span>
+        {/* Heading */}
+        <h2 className="text-center text-3xl lg:text-4xl font-bold mb-8 text-secondary">
+          All <span className="text-primary">Properties</span>
         </h2>
 
-        {/* ---- Filter Controls ---- */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 bg-base-200 p-4 rounded-xl shadow-sm border border-base-300">
+        {/* Filters */}
+        <div className="flex flex-col lg:flex-row gap-4 mb-8 bg-base-200 p-4 rounded-xl border border-base-300 justify-between">
           {/* Search */}
           <input
             type="text"
-            placeholder="Search by Property Name..."
-            value={searchTerm}
-            onChange={handleSearchTerm}
-            className="input input-bordered w-full md:w-1/3 rounded-xl border-base-300 focus:border-primary focus:outline-none"
+            placeholder="Search by property name and location..."
+            className="input input-bordered w-full lg:w-1/3"
+            value={search}
+            onChange={(e) => {
+              setPage(1);
+              setSearch(e.target.value);
+            }}
           />
 
+          {/* Category */}
+          <select
+            className="select select-bordered w-full lg:w-1/4"
+            value={category}
+            onChange={(e) => {
+              setPage(1);
+              setCategory(e.target.value);
+            }}
+          >
+            <option value="">All Categories</option>
+            <option value="Rent">Rent</option>
+            <option value="Sale">Sale</option>
+            <option value="Land">Land</option>
+            <option value="Commercial">Commercial</option>
+          </select>
+
           {/* Sort */}
-          <div className="flex items-center gap-2 flex-nowrap">
-            <span className="font-medium text-secondary dark:text-gray-300 whitespace-nowrap">
-              Sort by:
-            </span>
-            <select
-              className="select select-bordered rounded-xl border-base-300 focus:border-primary"
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-            >
-              <option value="dateDesc">Newest First</option>
-              <option value="dateAsc">Oldest First</option>
-              <option value="priceHigh">Price: High → Low</option>
-              <option value="priceLow">Price: Low → High</option>
-            </select>
-          </div>
+          <select
+            className="select select-bordered w-full lg:w-1/4"
+            value={sortOption}
+            onChange={(e) => {
+              setPage(1);
+              setSortOption(e.target.value);
+            }}
+          >
+            <option value="dateDesc">Newest First</option>
+            <option value="dateAsc">Oldest First</option>
+            <option value="priceHigh">Price: High → Low</option>
+            <option value="priceLow">Price: Low → High</option>
+          </select>
         </div>
 
-        {(loading || isSorting) ? (
+        {/* Data */}
+        {loading ? (
           <LoadingData />
-        ) : (
+        ) : properties.length > 0 ? (
           <>
-            {/* ---- Property Grid ---- */}
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 ">
-              {properties.length > 0 ? (
-                properties.map((property) => (
-                  <div key={property._id}>
-                    <PropertyCard property={property} />
-                  </div>
-                ))
-              ) : (
-                <p className="text-center col-span-full text-gray-500 dark:text-gray-400 py-10">
-                  No properties found.
-                </p>
-              )}
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+              {properties.map((property) => (
+                <PropertyCard key={property._id} property={property} />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            <div className="flex justify-center mt-10 gap-2">
+              <button
+                className="btn btn-sm"
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+              >
+                Prev
+              </button>
+
+              {[...Array(totalPages).keys()].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => setPage(num + 1)}
+                  className={`btn btn-sm ${
+                    page === num + 1 ? "btn-primary" : ""
+                  }`}
+                >
+                  {num + 1}
+                </button>
+              ))}
+
+              <button
+                className="btn btn-sm"
+                disabled={page === totalPages}
+                onClick={() => setPage(page + 1)}
+              >
+                Next
+              </button>
             </div>
           </>
+        ) : (
+          <p className="text-center text-gray-500 py-12">
+            No properties found.
+          </p>
         )}
       </div>
     </section>
-  
-
-   
   );
 };
 
