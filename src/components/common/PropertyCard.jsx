@@ -20,7 +20,7 @@ const PropertyCard = ({ property }) => {
     <div
       className="card bg-base-200 border border-base-300 rounded-2xl shadow-md
         hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5
-        w-full mx-auto h-[330px] sm:h-[340px] md:h-[300px]"
+        w-full mx-auto h-[330px] sm:h-[340px] md:h-[320px]"
     >
       {/* Image */}
       <figure className="relative h-44 sm:h-48 lg:h-44 overflow-hidden rounded-t-2xl">

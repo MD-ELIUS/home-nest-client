@@ -22,21 +22,22 @@ const MyProperties = () => {
 
    usePageTitle("My Property | HomeNest Real Estate");
 
-  useEffect(() => {
-    if (user?.email) {
-      setLoading(true);
-      fetch(`https://home-nest-api-server-chi.vercel.app/properties?userEmail=${user.email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setLoading(false);
-          setProperties(data);
-        })
-        .catch((err) => {
-          console.error(err);
-          MySwal.fire("Error!", "Failed to fetch properties.", "error");
-        });
-    }
-  }, [user?.email]);
+useEffect(() => {
+  if (user?.email) {
+    setLoading(true);
+    fetch(`https://home-nest-api-server-chi.vercel.app/properties?userEmail=${user.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+        setProperties(data.data); // 👈 access the array
+      })
+      .catch((err) => {
+        console.error(err);
+        MySwal.fire("Error!", "Failed to fetch properties.", "error");
+      });
+  }
+}, [user?.email]);
+
 
 
   const handleDelete = (id) => {
@@ -128,7 +129,7 @@ const MyProperties = () => {
   };
 
   return (
-    <div className="py-8 lg:py-10 space-y-6 bg-base-100">
+    <div className="py-8 lg:py-10 space-y-6 ">
       {loading ? (
         <LoadingData />
       ) : (
@@ -143,67 +144,67 @@ const MyProperties = () => {
               You have not added any property yet.
             </p>
           ) : (
-            <div className="w-11/12 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {properties.map((property) => (
-                <div
-                  key={property._id}
-                  className="bg-base-200  border border-base-300 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden animate-left-to-center"
-                >
-                  <img
-                    src={property.imageUrl  }
-                    alt={property.propertyName}
-                    className="w-full h-44 sm:h-48 object-cover"
-                  />
-                  <div className="p-4 sm:p-5 space-y-1 sm:space-y-2 animate-fade-in-center">
-                    <h2 className="text-lg sm:text-xl font-semibold text-primary dark:text-primary truncate ">
-                      {property.propertyName}
-                    </h2>
-                    <p className=" text-sm font-medium">
-                      <span className="text-secondary">Category: </span> {property.category}
-                    </p>
-                    <p className=" text-sm font-medium">
-                      <span className="text-secondary">Price: </span> {property.price}
-                    </p>
-                    <p className=" text-sm font-medium">
-                      <span className="text-secondary">Location: </span> {property.location}
-                    </p>
-                    <p className=" text-sm font-medium">
-                      <span className="text-secondary">Posted:{" "} </span>
-                      {new Date(property.created_at).toLocaleDateString(
-                        "en-GB",
-                        {
-                          day: "2-digit",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )}
-                    </p>
+            <div className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
-                    <div className="flex flex-col md:flex-row gap-2 mt-3">
-                      <button
-                        onClick={() => handleUpdateClick(property)}
-                        className="w-full sm:flex-1 btn btn-outline btn-success animate-fade-in-center"
-                      >
-                        Update
-                      </button>
-                      <button
-                        onClick={() => handleDelete(property._id)}
-                        className="w-full sm:flex-1 btn btn-outline btn-error animate-fade-in-center"
-                      >
-                        Delete
-                      </button>
-                      <Link
-                        to={`/property-details/${property._id}`}
-                        onClick={() =>
-                          window.scrollTo({ top: 0, behavior: "smooth" })
-                        }
-                        className="w-full sm:flex-1 btn btn-outline btn-primary animate-fade-in-center"
-                      >
-                        View Details
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+              {properties.map((property) => (
+             <div
+  key={property._id}
+  className="bg-base-200 border border-base-300 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col animate-left-to-center"
+>
+  <img
+    src={property.imageUrl}
+    alt={property.propertyName}
+    className="w-full h-36 sm:h-40 object-cover"
+  />
+  <div className="p-3 sm:p-4 flex flex-col flex-1 justify-between">
+    <div className="space-y-1 sm:space-y-2">
+      <h2 className="text-md sm:text-lg font-semibold text-primary truncate">
+        {property.propertyName}
+      </h2>
+      <p className="text-xs sm:text-sm font-medium truncate">
+        <span className="text-secondary">Category: </span> {property.category}
+      </p>
+      <p className="text-xs sm:text-sm font-medium truncate">
+        <span className="text-secondary">Price: </span> {property.price}
+      </p>
+      <p className="text-xs sm:text-sm font-medium truncate">
+        <span className="text-secondary">Location: </span> {property.location}
+      </p>
+      <p className="text-xs sm:text-sm font-medium">
+        <span className="text-secondary">Posted: </span>
+        {new Date(property.created_at).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        })}
+      </p>
+    </div>
+
+    {/* Buttons stick to bottom */}
+    <div className="flex flex-col md:flex-row gap-1 mt-2">
+      <button
+        onClick={() => handleUpdateClick(property)}
+        className="w-full sm:flex-1 btn btn-outline btn-success btn-xs"
+      >
+        Update
+      </button>
+      <button
+        onClick={() => handleDelete(property._id)}
+        className="w-full sm:flex-1 btn btn-outline btn-error btn-xs"
+      >
+        Delete
+      </button>
+      <Link
+        to={`/property-details/${property._id}`}
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="w-full sm:flex-1 btn btn-outline btn-primary btn-xs"
+      >
+        View Details
+      </Link>
+    </div>
+  </div>
+</div>
+
               ))}
             </div>
           )}

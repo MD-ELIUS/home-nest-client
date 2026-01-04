@@ -10,12 +10,13 @@ const Login = () => {
   const [error, setError] = useState("");
   const [googleError, setGoogleError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordValue, setPasswordValue] = useState(""); // track password
   const { signInUser, setUser, signInGoogleUser } = useContext(AuthContext);
   const emailRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
 
-     usePageTitle("Login | HomeNest Real Estate");
+  usePageTitle("Login | HomeNest Real Estate");
 
   const handlePasswordShow = (e) => {
     e.preventDefault();
@@ -31,27 +32,20 @@ const Login = () => {
         toast.success("Logged in successfully");
         navigate(`${location.state ? location.state : "/"}`);
 
-          const newUser = {
-                    name: user.displayName,
-                    email: user.email,
-                    photoUrl: user.photoURL,
-                    createdAt: new Date().toISOString() 
-                }
+        const newUser = {
+          name: user.displayName,
+          email: user.email,
+          photoUrl: user.photoURL,
+          createdAt: new Date().toISOString(),
+        };
 
-                     
-                fetch('https://home-nest-api-server-chi.vercel.app/users', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(newUser)
-                })
-                .then(res => res.json())
-                .then(data => {
-                    console.log('data after user save', data)
-                })
-
-        
+        fetch("https://home-nest-api-server-chi.vercel.app/users", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log("data after user save", data));
       })
       .catch((err) => setGoogleError(err.message));
   };
@@ -72,20 +66,19 @@ const Login = () => {
       .catch((err) => setError(err.message));
   };
 
-
+  // 🔹 Fill demo user credentials
+  const handleDemoUser = () => {
+    emailRef.current.value = "mdelius320@gmail.com";
+    setPasswordValue("Home123#");
+  };
 
   return (
-
-   
-      
-      
-   <div className="flex justify-center items-center  bg-base-100  py-8 lg:py-10">
-
-      <div className=" w-11/12 mx-auto max-w-md bg-base-200 shadow-xl p-6 border border-base-300 rounded-2xl animate-fade-in-center">
-      <h2 className="text-center text-2xl  md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary">
-           Login to <span className="text-primary">Your Account</span>
+    <div className="flex justify-center items-center bg-base-100 py-8 lg:py-10">
+      <div className="w-11/12 mx-auto max-w-md bg-base-200 shadow-xl p-6 border border-base-300 rounded-2xl animate-fade-in-center">
+        <h2 className="text-center text-2xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary">
+          Login to <span className="text-primary">Your Account</span>
         </h2>
-      
+
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
           <div>
@@ -109,6 +102,8 @@ const Login = () => {
               placeholder="Enter your password"
               className="input w-full bg-base-200 h-12 focus:outline-none focus:ring-0"
               required
+              value={passwordValue}
+              onChange={(e) => setPasswordValue(e.target.value)}
             />
             <span
               onClick={handlePasswordShow}
@@ -119,10 +114,7 @@ const Login = () => {
           </div>
 
           {/* Forgot Password */}
-          <div
-          
-            className="text-sm text-right cursor-pointer hover:text-primary"
-          >
+          <div className="text-sm text-right cursor-pointer hover:text-primary">
             Forgot password?
           </div>
 
@@ -137,6 +129,14 @@ const Login = () => {
             Login
           </button>
         </form>
+
+        {/* Demo User Button */}
+        <button
+          onClick={handleDemoUser}
+          className="btn btn-sm btn-outline btn-success w-full mt-4"
+        >
+          Demo User
+        </button>
 
         <div className="divider">OR</div>
 
@@ -154,17 +154,15 @@ const Login = () => {
 
         <p className="text-center mt-4 text-sm">
           Don’t have an account?{" "}
-          <Link to="/register" className="text-secondary font-semibold underline">
+          <Link
+            to="/register"
+            className="text-secondary font-semibold underline"
+          >
             Register Now
           </Link>
         </p>
       </div>
     </div>
-
-
-    
-
-
   );
 };
 
