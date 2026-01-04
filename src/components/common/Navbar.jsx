@@ -59,7 +59,7 @@ export default function Navbar() {
 
     return (
         <div className="bg-base-100 nav shadow-md  w-full top-0 left-0 z-50 sticky">
-            <div className=" w-11/12 mx-auto flex justify-between items-center py-2 ">
+            <div className=" w-11/12 mx-auto flex justify-between items-center py-1 md:py-2 ">
 
                 {/* Left Section - Logo */}
                 <Link to="/" className="flex items-center gap-2 text-xl font-bold">

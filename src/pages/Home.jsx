@@ -8,6 +8,7 @@ import WhyChooseUs from '../components/home/WhyChooseUs';
 import ExpertGuidance from '../components/home/ExpertGuidance';
 import PopularLocations from '../components/home/PopularLocations';
 import ClientTestimonials from '../components/home/ClientTestimonials';
+import FAQSection from '../components/home/FAQSection';
 
 const Home = () => {
 
@@ -23,6 +24,7 @@ const Home = () => {
             <ExpertGuidance></ExpertGuidance>
             <PopularLocations></PopularLocations>
             <ClientTestimonials></ClientTestimonials>
+            <FAQSection></FAQSection>
         </div>
     
         

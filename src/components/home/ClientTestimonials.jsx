@@ -45,13 +45,14 @@ const testimonials = [
 
 export default function ClientTestimonials() {
   return (
-    <section className="pb-8 md:pb-8 lg:pb-10 bg-base-100 overflow-hidden">
-      <div className="w-11/12 mx-auto text-center mb-6">
+    <section className=" w-11/12 mx-auto pb-10 bg-base-100 overflow-hidden">
+      {/* Heading */}
+      <div className=" text-center mb-6">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.9 }}
-          className="text-3xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 text-secondary"
+          className="text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 text-secondary"
         >
           Client <span className="text-primary">Testimonials</span>
         </motion.h2>
@@ -66,12 +67,17 @@ export default function ClientTestimonials() {
         </motion.p>
       </div>
 
-      <Marquee pauseOnHover gradient={false} speed={45} className="py-4">
+      {/* Marquee */}
+      <Marquee pauseOnHover gradient={false} speed={45}  autoFill className="py-4">
         {testimonials.map((item) => (
           <div
             key={item.id}
-            className="mx-4 w-[300px] sm:w-[340px] flex-shrink-0 border border-base-300 rounded-2xl p-5
-              flex flex-col justify-between h-[160px] shadow-lg hover:shadow-xl transition-all duration-300"
+            className="
+              mx-4 w-[300px] sm:w-[340px] flex-shrink-0
+              border border-base-300 rounded-2xl p-5
+              shadow-lg hover:shadow-xl transition-all duration-300
+              h-[180px] flex flex-col
+            "
           >
             {/* Top */}
             <div className="flex flex-col gap-2">
@@ -82,16 +88,24 @@ export default function ClientTestimonials() {
                   className="w-12 h-12 rounded-full border-2 border-secondary object-cover"
                 />
                 <div>
-                  <h4 className="font-semibold text-primary">{item.name}</h4>
-                  <p className="text-sm opacity-80">{item.role}</p>
+                  <h4 className="font-semibold text-primary leading-tight">
+                    {item.name}
+                  </h4>
+                  <p className="text-sm opacity-80 leading-tight">
+                    {item.role}
+                  </p>
                 </div>
               </div>
 
-              <Rating style={{ maxWidth: 100 }} value={item.rating} readOnly />
+              <Rating
+                style={{ maxWidth: 100 }}
+                value={item.rating}
+                readOnly
+              />
             </div>
 
-            {/* Review */}
-            <p className="opacity-80 text-sm leading-snug mt-1 overflow-hidden line-clamp-3">
+            {/* Review (FIXED AREA) */}
+            <p className="mt-2 text-sm opacity-80 leading-snug line-clamp-3 min-h-[3.9rem]">
               “{item.review}”
             </p>
           </div>

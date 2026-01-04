@@ -84,7 +84,7 @@ const Banner = () => {
 
 
   return (
-    <section className="w-full h-[50vh] md:h-[65vh] lg:h-[75vh] relative overflow-hidden">
+    <section className="w-full h-[50vh] md:h-[65vh] lg:h-[75vh] max-h-[400px] relative overflow-hidden">
  <Swiper
   modules={[Pagination, Autoplay, EffectFade]}
   pagination={{ clickable: true }}
