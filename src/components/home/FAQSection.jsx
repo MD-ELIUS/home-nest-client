@@ -39,7 +39,7 @@ export default function FAQSection() {
   const [openId, setOpenId] = useState(null);
 
   return (
-    <section className="py-14 bg-base-100">
+    <section className="py-14 ">
       <div className="w-11/12 max-w-4xl mx-auto">
         {/* Heading */}
         <div className="text-center mb-10">
@@ -59,7 +59,7 @@ export default function FAQSection() {
             return (
               <div
                 key={faq.id}
-                className="w-11/12 mx-auto border border-base-300 rounded-xl overflow-hidden"
+                className="w-11/12 mx-auto  bg-base-200 rounded-xl overflow-hidden"
               >
                 {/* Question (NO layout animation here) */}
                 <button
@@ -68,7 +68,7 @@ export default function FAQSection() {
                   }
                   className="w-full flex items-center justify-between p-5 text-left"
                 >
-                  <span className="font-medium text-base">
+                  <span className="font-medium text-primary">
                     {faq.question}
                   </span>
 
@@ -90,7 +90,7 @@ export default function FAQSection() {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="px-5 pb-5"
                   >
-                    <p className="text-sm opacity-80 leading-relaxed">
+                    <p className="text-sm opacity-80 leading-relaxed text-secondary">
                       {faq.answer}
                     </p>
                   </motion.div>

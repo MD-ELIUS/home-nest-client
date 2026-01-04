@@ -19,7 +19,7 @@ const RootLayout = () => {
     return (
         <div className="flex flex-col min-h-screen max-w-[1800px] mx-auto">
             <Navbar></Navbar>
-            <main className='flex-grow'>
+            <main className='flex-grow bg-base-300'>
                   <Outlet key={location.pathname}></Outlet>
             </main>
             

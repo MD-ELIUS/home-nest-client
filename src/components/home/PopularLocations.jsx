@@ -29,7 +29,7 @@ export default function PopularLocations() {
   ];
 
   return (
-    <section className="pb-8 md:pb-8 lg:pb-10 bg-base-100 dark:bg-base-200">
+    <section className="pb-8 md:pb-8 lg:pb-10 ">
       <div className="w-11/12 mx-auto text-center">
         {/* Animated Section Heading */}
         <motion.h2

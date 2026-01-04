@@ -45,7 +45,7 @@ const testimonials = [
 
 export default function ClientTestimonials() {
   return (
-    <section className=" w-11/12 mx-auto pb-10 bg-base-100 overflow-hidden">
+    <section className=" w-11/12 mx-auto pb-10  overflow-hidden">
       {/* Heading */}
       <div className=" text-center mb-6">
         <motion.h2
@@ -76,7 +76,7 @@ export default function ClientTestimonials() {
               mx-4 w-[300px] sm:w-[340px] flex-shrink-0
               border border-base-300 rounded-2xl p-5
               shadow-lg hover:shadow-xl transition-all duration-300
-              h-[180px] flex flex-col
+              h-[180px] flex flex-col bg-base-200
             "
           >
             {/* Top */}

@@ -17,7 +17,7 @@ const Home = () => {
     return (
 
            
-      <div className='pb-4 sm:pb-6 md:pb-8 lg:pb-10 bg-base-100'>
+      <div className='pb-4 sm:pb-6 md:pb-8 lg:pb-10 '>
             <Banner></Banner>
             <FeaturedProperties></FeaturedProperties>
             <WhyChooseUs></WhyChooseUs>
