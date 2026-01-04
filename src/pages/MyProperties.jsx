@@ -129,7 +129,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="py-8 lg:py-10 space-y-6 ">
+    <div className="space-y-6 ">
       {loading ? (
         <LoadingData />
       ) : (
@@ -144,7 +144,7 @@ useEffect(() => {
               You have not added any property yet.
             </p>
           ) : (
-            <div className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
               {properties.map((property) => (
              <div

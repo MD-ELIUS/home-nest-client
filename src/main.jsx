@@ -16,49 +16,68 @@ import PrivateRoute from './routes/PrivateRoute.jsx';
 import MyProperties from './pages/MyProperties.jsx';
 import MyRatings from './pages/MyRatings.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
-
+import DashboardHome from './pages/DashboardHome.jsx';
+import DashboardLayout from './layout/DashboardLayout.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
-    errorElement:<ErrorPage/>,
+    errorElement: <ErrorPage />,
     children: [
-      { 
+      {
         index: true,
-        Component: Home
+        Component: Home,
       },
       {
-        path: '/register',
-        Component: Register
-      },
-       {
-        path: '/login',
-        Component: Login
+        path: "/register",
+        Component: Register,
       },
       {
-        path: '/add-property',
-        element: <PrivateRoute><AddProperty></AddProperty></PrivateRoute>
+        path: "/login",
+        Component: Login,
       },
-      {
-        path: '/all-properties',
-        Component: AllProperties
-      },
-      {
-        path: '/property-details/:id',
-        element: <PropertyDetails></PropertyDetails>
-      },
-      {
-        path: "/my-properties",
-        element: <PrivateRoute><MyProperties></MyProperties></PrivateRoute>
-      },
-      {
-        path: "/my-ratings",
-        element: <PrivateRoute><MyRatings></MyRatings></PrivateRoute>
-      }
       
-    ]
-  }
+      {
+        path: "/all-properties",
+        Component: AllProperties,
+      },
+      {
+        path: "/property-details/:id",
+        Component: PropertyDetails,
+      },
+    
+     
+    ],
+  },
+
+  // ================= DASHBOARD ROUTES =================
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        Component: DashboardHome,
+      },
+      {
+        path: "my-properties",
+        Component: MyProperties,
+      },
+      {
+        path: "my-ratings",
+        Component: MyRatings,
+      },
+      {
+        path: "add-property",
+        Component: AddProperty,
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById('root')).render(
