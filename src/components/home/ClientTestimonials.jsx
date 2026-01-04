@@ -79,7 +79,7 @@ export default function ClientTestimonials() {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-12 h-12 rounded-full border-2 border-primary object-cover"
+                  className="w-12 h-12 rounded-full border-2 border-secondary object-cover"
                 />
                 <div>
                   <h4 className="font-semibold text-primary">{item.name}</h4>

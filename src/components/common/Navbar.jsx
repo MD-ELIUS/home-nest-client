@@ -58,14 +58,14 @@ export default function Navbar() {
     );
 
     return (
-        <div className="bg-base-100 nav shadow-md  w-full top-0 left-0 z-50">
-            <div className=" w-11/12 mx-auto flex justify-between items-center py-2 sm:py-3 md:py-4">
+        <div className="bg-base-100 nav shadow-md  w-full top-0 left-0 z-50 sticky">
+            <div className=" w-11/12 mx-auto flex justify-between items-center py-2 ">
 
                 {/* Left Section - Logo */}
                 <Link to="/" className="flex items-center gap-2 text-xl font-bold">
                     <div>
                         <img
-                            className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 xl:h-16 xl:w-16 2xl:h-20 2xl:w-20"
+                            className="h-10 w-10 md:h-12 sm:w-12"
                             src={logoImg}
                             alt=""
                         />
@@ -92,12 +92,12 @@ export default function Navbar() {
                             <>
                                 <div className="dropdown dropdown-end hidden md:flex">
                                     {/* Avatar trigger */}
-                                    <div tabIndex={0} role="button" className="btn btn-ghost h-14 w-14 btn-circle avatar">
+                                    <div tabIndex={0} role="button" className="btn btn-ghost h-10 w-10  btn-circle avatar outline-1 outline-secondary">
 
                                         <img
                                             src={user?.photoURL ? user.photoURL : userImg}
                                             alt="User Avatar"
-                                            className="object-cover w-full h-full outline-2 outline-secondary rounded-full"
+                                            className="object-cover w-full h-full  rounded-full"
                                             onError={(e) => {
                                                 e.target.onerror = null;
                                                 e.target.src = userImg;
