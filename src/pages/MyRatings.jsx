@@ -100,7 +100,7 @@ const MyRatings = () => {
   if (loadingReviews || loadingProperties) return <LoadingData />;
 
   return (
-    <div className="w-11/12 mx-auto md:w-full bg-base-100">
+    <div className="w-11/12 mx-auto md:w-full ">
       <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold mb-7 text-secondary">
         My <span className="text-primary">Ratings</span>{" "}
         <span className="text-primary">({reviews.length})</span>

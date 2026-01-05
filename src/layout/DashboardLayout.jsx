@@ -9,6 +9,7 @@ import {
   FaBars,
   FaTimes,
   FaStarOfDavid,
+  FaUserEdit,
 } from "react-icons/fa";
 import Switch from "../components/Switch";
 import userImg from "../assets/avatar.png";
@@ -37,7 +38,7 @@ const DashboardLayout = () => {
 
   // Sidebar content
   const SidebarContent = () => (
-    <nav className="p-4 space-y-2">
+    <nav className="p-6 space-y-2">
       <NavLink
         to="/dashboard"
         end
@@ -49,6 +50,18 @@ const DashboardLayout = () => {
         }
       >
         <FaHome /> Dashboard Home
+      </NavLink>
+      <NavLink
+        to="/dashboard/profile"
+        end
+        onClick={() => setOpen(false)}
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 rounded-lg transition ${
+            isActive ? "bg-primary text-white" : "hover:bg-primary/10 text-secondary"
+          }`
+        }
+      >
+        <FaUserEdit /> My Profile
       </NavLink>
       <NavLink
         to="/dashboard/my-properties"
@@ -138,7 +151,7 @@ const DashboardLayout = () => {
 
               <li className="mt-2">
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/profile"
                 className="btn btn-primary btn-outline w-full flex items-center justify-center gap-2"
                 >
                   My Profile
@@ -161,7 +174,7 @@ const DashboardLayout = () => {
       {/* BODY */}
       <div className="flex">
         {/* Desktop Sidebar */}
-        <aside className="hidden md:block fixed top-16 left-2 w-64 h-[calc(100vh-64px)] bg-base-100 border-r border-base-300 z-40">
+        <aside className="hidden md:block fixed top-16 left-0 w-64 h-[calc(100vh-64px)] bg-base-100 border-r border-base-300 z-40">
         
           <SidebarContent />
         </aside>

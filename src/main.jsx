@@ -18,6 +18,7 @@ import MyRatings from './pages/MyRatings.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import DashboardHome from './pages/DashboardHome.jsx';
 import DashboardLayout from './layout/DashboardLayout.jsx';
+import Profile from './pages/Profile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
         path: "add-property",
         Component: AddProperty,
       },
+      {
+        path: "profile",
+        Component: Profile,
+      }
     ],
   },
 ]);
