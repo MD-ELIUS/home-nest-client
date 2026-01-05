@@ -65,7 +65,7 @@ const newProperty = {
 
       
 
-       <div className="flex justify-center items-center min-h-screen bg-base-100 ">
+       <div className="flex justify-center items-center min-h-screen bg-base-100 w-11/12 mx-auto md:w-full">
       <div className=" bg-base-200  shadow-xl p-6 border border-base-300 rounded-2xl animate-fade-in-center ">
           <h2 className="text-center text-2xl  md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary">
           Add <span className="text-primary">Property</span>

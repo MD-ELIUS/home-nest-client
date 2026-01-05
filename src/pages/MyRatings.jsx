@@ -7,40 +7,62 @@ import "@smastrom/react-rating/style.css";
 import LoadingData from "../Loader/LoadingData";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
-import demoImg from ".././assets/avatar.png";
+import demoImg from "../assets/avatar.png";
 
 const MyRatings = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+
   const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [loadingProperties, setLoadingProperties] = useState(true);
   const [properties, setProperties] = useState([]);
+
+  const [loadingReviews, setLoadingReviews] = useState(true);
+  const [loadingProperties, setLoadingProperties] = useState(true);
 
   usePageTitle("My Ratings | HomeNest Real Estate");
 
+  /* ================= USER REVIEWS ================= */
   useEffect(() => {
-    if (user?.email && user?.accessToken) {
-      setLoading(true);
-      axiosSecure
-        .get(`/reviews?email=${user.email}`)
-        .then((res) => setReviews(res.data))
-        .catch((err) => console.error("Error fetching user reviews:", err))
-        .finally(() => setLoading(false));
-    }
-  }, [user, axiosSecure]);
+    if (!user?.email) return;
 
+    setLoadingReviews(true);
+    axiosSecure
+      .get(`/reviews?email=${user.email}`)
+      .then((res) => {
+        setReviews(Array.isArray(res.data) ? res.data : []);
+      })
+      .catch((err) => {
+        console.error("Error fetching reviews:", err);
+        setReviews([]);
+      })
+      .finally(() => setLoadingReviews(false));
+  }, [user?.email, axiosSecure]);
+
+  /* ================= ALL PROPERTIES ================= */
   useEffect(() => {
     setLoadingProperties(true);
+
     fetch("https://home-nest-api-server-chi.vercel.app/properties")
       .then((res) => res.json())
       .then((data) => {
-        setProperties(data);
-        setLoadingProperties(false);
-      });
+        // ✅ VERY IMPORTANT SAFETY CHECK
+        if (Array.isArray(data)) {
+          setProperties(data);
+        } else if (Array.isArray(data?.data)) {
+          setProperties(data.data);
+        } else {
+          console.error("Invalid properties response:", data);
+          setProperties([]);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching properties:", err);
+        setProperties([]);
+      })
+      .finally(() => setLoadingProperties(false));
   }, []);
 
-
+  /* ================= DELETE REVIEW ================= */
   const handleDeleteReview = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -51,55 +73,55 @@ const MyRatings = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const res = await axiosSecure.delete(`/reviews/${id}`);
+      if (!result.isConfirmed) return;
 
-          if (res.data?.success && res.data?.deletedCount > 0) {
-            setReviews((prev) => prev.filter((rev) => rev._id !== id));
-            Swal.fire("Deleted!", "Your review has been deleted.", "success");
-          } else {
-            Swal.fire("Error!", "Failed to delete the review.", "error");
-          }
-        } catch (err) {
-          console.error("Error deleting review:", err);
-          Swal.fire("Error!", "Something went wrong.", "error");
+      try {
+        const res = await axiosSecure.delete(`/reviews/${id}`);
+
+        if (res.data?.deletedCount > 0) {
+          setReviews((prev) => prev.filter((rev) => rev._id !== id));
+          Swal.fire("Deleted!", "Your review has been deleted.", "success");
+        } else {
+          Swal.fire("Error!", "Failed to delete the review.", "error");
         }
+      } catch (err) {
+        console.error("Delete error:", err);
+        Swal.fire("Error!", "Something went wrong.", "error");
       }
     });
   };
 
-
+  /* ================= SAFE PROPERTY LOOKUP ================= */
   const getPropertyInfo = (propertyId) => {
-    return properties.find((p) => p._id === propertyId);
+    if (!Array.isArray(properties)) return null;
+    return properties.find((p) => p._id === propertyId) || null;
   };
 
-  if (loading || loadingProperties) return <LoadingData />;
+  if (loadingReviews || loadingProperties) return <LoadingData />;
 
   return (
-    <div className=" mx-auto py-8 bg-base-100">
+    <div className="w-11/12 mx-auto md:w-full bg-base-100">
       <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold mb-7 text-secondary">
-            My <span className="text-primary">Ratings</span>{" "}
-            <span className="text-primary">({reviews.length})</span>
-          </h2>
+        My <span className="text-primary">Ratings</span>{" "}
+        <span className="text-primary">({reviews.length})</span>
+      </h2>
 
       {reviews.length === 0 ? (
-        <div className="text-center text-secondary/70 text-lg py-16   animate-fade-in-center">
+        <div className="text-center text-secondary/70 text-lg py-16 animate-fade-in-center">
           <p>You haven't submitted any reviews yet.</p>
         </div>
       ) : (
-        <div className="w-11/12 mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {reviews.map((rev, idx) => {
+        <div className="  grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+          {reviews.map((rev) => {
             const property = getPropertyInfo(rev.propertyId);
-
-            if (!property) return null; 
+            if (!property) return null;
 
             return (
               <div
-                key={idx}
+                key={rev._id}
                 className="bg-base-200 border border-base-300 shadow-md rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300 animate-left-to-center"
               >
-                {/* Property Thumbnail */}
+                {/* Property Image */}
                 <div className="h-48 w-full overflow-hidden">
                   <img
                     src={
@@ -112,13 +134,17 @@ const MyRatings = () => {
                 </div>
 
                 {/* Review Info */}
-                <div className="p-4 space-y-2 animate-fade-in-center">
+                <div className="p-4 space-y-2">
                   <h3 className="text-lg font-bold text-primary line-clamp-1">
                     {property.propertyName}
                   </h3>
 
                   <div className="flex items-center justify-between">
-                    <Rating style={{ maxWidth: 110 }} readOnly value={rev.rating} />
+                    <Rating
+                      style={{ maxWidth: 110 }}
+                      readOnly
+                      value={rev.rating}
+                    />
                     <span className="text-sm opacity-80">
                       {new Date(rev.reviewDate).toLocaleDateString("en-GB", {
                         day: "2-digit",
@@ -128,13 +154,14 @@ const MyRatings = () => {
                     </span>
                   </div>
 
-                  <p className=" text-sm opacity-80 line-clamp-3">
+                  <p className="text-sm opacity-80 line-clamp-3">
                     {rev.reviewText}
                   </p>
 
+                  {/* Reviewer */}
                   <div className="flex items-center gap-3 pt-3 border-t border-base-300">
                     <img
-                      src={rev.reviewerImage ? rev.reviewerImage : demoImg}
+                      src={rev.reviewerImage || demoImg}
                       alt={rev.reviewerName}
                       className="w-10 h-10 rounded-full object-cover border-2 border-secondary"
                     />
@@ -148,8 +175,15 @@ const MyRatings = () => {
                     </div>
                   </div>
 
-                  <div className=" flex flex-col gap-2 pt-4">
-                    <button onClick={() => handleDeleteReview(rev._id)} className="btn btn-outline btn-error btn-sm w-full">Delete</button>
+                  {/* Actions */}
+                  <div className="flex flex-col gap-2 pt-4">
+                    <button
+                      onClick={() => handleDeleteReview(rev._id)}
+                      className="btn btn-outline btn-error btn-sm w-full"
+                    >
+                      Delete
+                    </button>
+
                     <Link
                       to={`/property-details/${property._id}`}
                       onClick={() =>

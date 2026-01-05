@@ -185,7 +185,7 @@ const DashboardLayout = () => {
 
 
         {/* Main Content */}
-        <main className="flex-1 p-6 md:ml-64 min-h-[calc(100vh-64px)]">
+        <main className="flex-1 md:px-6 py-6 md:ml-64 min-h-[calc(100vh-64px)]">
           <Outlet />
         </main>
       </div>
