@@ -55,7 +55,7 @@ const AllProperties = () => {
           <input
             type="text"
             placeholder="Search by property name and location..."
-            className="input input-bordered w-full lg:w-1/3"
+            className="input outline-none w-full lg:w-1/3"
             value={search}
             onChange={(e) => {
               setPage(1);
@@ -65,7 +65,7 @@ const AllProperties = () => {
 
           {/* Category */}
           <select
-            className="select select-bordered w-full lg:w-1/4"
+            className="select outline-none w-full lg:w-1/4"
             value={category}
             onChange={(e) => {
               setPage(1);
@@ -81,7 +81,7 @@ const AllProperties = () => {
 
           {/* Sort */}
           <select
-            className="select select-bordered w-full lg:w-1/4"
+            className="select outline-none w-full lg:w-1/4"
             value={sortOption}
             onChange={(e) => {
               setPage(1);

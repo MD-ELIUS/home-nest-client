@@ -44,9 +44,8 @@ export default function Navbar() {
             {
                 user && (
                     <>
-                        <li><NavLink to="/add-property" className=" text-secondary font-medium">Add Property</NavLink></li>
-                        <li><NavLink to="/my-properties" className=" text-secondary font-medium">My Properties</NavLink></li>
-                        <li><NavLink to="/my-ratings" className=" text-secondary font-medium">My Ratings</NavLink></li>
+                        <li><NavLink to="/dashboard" className=" text-secondary font-medium">Dashboard</NavLink></li>
+                        
 
                     </>
                 )
