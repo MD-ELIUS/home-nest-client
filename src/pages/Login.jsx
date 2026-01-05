@@ -73,7 +73,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center bg-base-100 py-8 lg:py-10">
+    <div className="flex justify-center items-center  py-8 lg:py-10">
       <div className="w-11/12 mx-auto max-w-md bg-base-200 shadow-xl p-6 border border-base-300 rounded-2xl animate-fade-in-center">
         <h2 className="text-center text-2xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-5 md:mb-7 text-secondary">
           Login to <span className="text-primary">Your Account</span>

@@ -174,9 +174,8 @@ export default function Navbar() {
                         {
                             user && (
                                 <>
-                                    <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/add-property" className="text-secondary text-[16px] font-medium">Add Property</NavLink></li>
-                                    <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/my-properties" className="text-secondary text-[16px] font-medium">My Properties</NavLink></li>
-                                    <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/my-ratings" className="text-secondary text-[16px] font-medium">My Ratings</NavLink></li>
+                                    <li><NavLink onClick={() => setMenuOpen(!menuOpen)} to="/dashboard" className="text-secondary text-[16px] font-medium">Dashboard</NavLink></li>
+                                   
                                 </>
                             )
                         }

@@ -14,10 +14,10 @@ import {
 import Switch from "../components/Switch";
 import userImg from "../assets/avatar.png";
 import { MdAddCircle, MdClose, MdFilterList, MdOutlineStar } from "react-icons/md";
-import { FiMenu } from "react-icons/fi";
+import { FiHome, FiMenu } from "react-icons/fi";
 
 const DashboardLayout = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, signOutUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -31,10 +31,15 @@ const DashboardLayout = () => {
   const handleTheme = (checked) => setTheme(checked ? "dark" : "light");
 
   // Logout
-  const handleLogout = async () => {
-    await logOut();
-    navigate("/login");
-  };
+    const handleLogOut = () => {
+        signOutUser()
+            .then(() => {
+                navigate("/login")
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+    }
 
   // Sidebar content
   const SidebarContent = () => (
@@ -95,6 +100,18 @@ const DashboardLayout = () => {
         }
       >
         <MdAddCircle /> Add property
+      </NavLink>
+      
+      <NavLink
+        to="/"
+        onClick={() => setOpen(false)}
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 rounded-lg transition ${
+            isActive ? "bg-primary text-white" : "hover:bg-primary/10 text-secondary"
+          }`
+        }
+      >
+        <FiHome /> Home
       </NavLink>
     </nav>
   );
@@ -160,7 +177,7 @@ const DashboardLayout = () => {
 
               <li className="mt-2">
                 <button
-                  onClick={handleLogout}
+                  onClick={handleLogOut}
                   className="btn btn-primary btn-outline w-full flex items-center justify-center gap-2"
                 >
                   <FaSignOutAlt /> Logout

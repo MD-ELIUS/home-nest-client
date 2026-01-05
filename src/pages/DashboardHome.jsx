@@ -12,6 +12,7 @@ import {
   YAxis,
   ResponsiveContainer,
 } from "recharts";
+import LoadingData from "../Loader/LoadingData";
 
 const COLORS = ["#6366f1", "#22c55e", "#f59e0b", "#ef4444"];
 
@@ -81,11 +82,11 @@ const DashboardHome = () => {
 
   /* ================= EARLY RETURN AFTER HOOKS ================= */
   if (loading) {
-    return <div className="text-center mt-10">Loading dashboard...</div>;
+    return <LoadingData />;
   }
 
   return (
-    <div className="w-full space-y-10">
+    <div className=" space-y-10 w-11/12 mx-auto md:w-full">
       {/* ================= TITLE ================= */}
       <div>
         <h1 className="text-3xl font-bold text-secondary">
@@ -102,7 +103,7 @@ const DashboardHome = () => {
       </div>
 
       {/* ================= STATS ================= */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <StatCard title="Total Properties" value={totalProperties} />
         <StatCard title="My Properties" value={myPropertyCount} />
         <StatCard title="My Reviews" value={myReviewCount} />
@@ -110,7 +111,7 @@ const DashboardHome = () => {
       </div>
 
       {/* ================= CHARTS ================= */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Pie Chart */}
         <div className="bg-base-100 p-6 rounded-xl shadow">
           <h3 className="text-xl font-semibold mb-4">Category Wise Properties</h3>

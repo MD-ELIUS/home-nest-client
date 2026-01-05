@@ -38,7 +38,7 @@ const PropertyCard = ({ property }) => {
       </figure>
 
       {/* Card Body (COMPACT) */}
-      <div className="card-body p-2 sm:p-3 flex flex-col gap-1">
+      <div className="card-body p-4 sm:p-3 flex flex-col gap-1">
         <h3 className="text-sm sm:text-base font-semibold text-primary truncate leading-tight">
           {propertyName || "Untitled Property"}
         </h3>
